@@ -15,8 +15,13 @@ app.controller('mainController', ['$http', function($http){
   this.login    = function(){
     console.log('logging in...');
     console.log('Formdata: ', this.formdata);
-    
+
   }
 
+  this.register = function(){
+    console.log('registering...');
+    console.log('Formdata: ', this.formdata);
+
+  }
 
 }])

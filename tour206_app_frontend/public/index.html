@@ -1,15 +1,202 @@
 <!DOCTYPE html>
-<html ng-app="tour-app">
+<html lang="en" ng-app="tour-app">
+  <!-- Meta content -->
   <head>
     <meta charset="utf-8">
+    <!-- Ensure proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap: Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap: Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Angular Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <!-- Link to app.js file -->
     <script type="text/javascript" src="app.js">
     </script>
     <title></title>
   </head>
-  <body ng-controller="mainController as ctrl">
-    hi
-    {{ctrl.word}}
+  <!-- Body content -->
+  <body ng-controller="mainController as ctrl" class="">
+  <!-- Bootstrap container div  -->
+    <div class="container">
+
+      <!-- Modal -->
+      <div id="login" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal: Login -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">tour(206) // login</h4>
+            </div>
+            <div class="modal-body">
+              <form ng-submit="ctrl.login()">
+                <div class="form-group">
+                  <label for="email">Email address:</label>
+                  <input ng-model="ctrl.formdata.email" type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input ng-model="ctrl.formdata.password" type="password" class="form-control" id="pwd">
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox"> Remember me</label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="register" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal: Login -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">tour(206) // login</h4>
+            </div>
+            <div class="modal-body">
+              <form ng-submit="ctrl.register()">
+                <div class="form-group">
+                  <label for="email">Email address:</label>
+                    <input ng-model="ctrl.formdata.email" type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input ng-model="ctrl.formdata.password" type="password" class="form-control" id="pwd">
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox"> Remember me</label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+        <!-- Login button -->
+        <div class="text-right">
+          <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login"> Login</a>
+          <!-- Register Button -->
+          <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register"> Register</a>
+        </div>
+        <div class="page-header">
+          <h1><code>tour(206)</code> <small> // let the music find you</small></h1>
+        </div>
+
+
+
+      <!-- <blockquote cite="Nietzsche" class="">
+        <p>Without music, life would be a mistake.</p>
+        <footer>Friedrich Nietzsche</footer>
+      </blockquote> -->
+
+
+      <p>Using Angular JS... {{ctrl.word}}.</p>
+
+
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#venues">Venues</a></li>
+        <li><a data-toggle="tab" href="#shows">Shows</a></li>
+        <li><a data-toggle="tab" href="#myshows">My Plans</a></li>
+      </ul>
+
+      <div  class="tab-content">
+
+        <div id="venues" class="tab-pane fade in active">
+          <h1>Venues</h1>
+          <p>User can filter: <input/> <span class="glyphicon glyphicon-search"></span></p>
+          <ul class="list-group">
+            <li class="list-group-item">First venue</li>
+            <li class="list-group-item">Second venue</li>
+            <li class="list-group-item">Third venue</li>
+          </ul>
+          <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+          </ul>
+        </div>
+
+        <div id="shows" class="tab-pane fade">
+          <h1>Shows</h1>
+          <p>User can filter: <input/> <span class="glyphicon glyphicon-search"></span></p>
+          <ul class="list-group">
+            <li class="list-group-item">First show</li>
+            <li class="list-group-item">Second show</li>
+            <li class="list-group-item">Third show</li>
+          </ul>
+          <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+          </ul>
+        </div>
+
+        <div id="myshows" class="tab-pane fade">
+          <h1>My Shows</h1>
+          <p>User can filter: <input/>  <span class="glyphicon glyphicon-search"></span></p>
+          <ul class="list-group">
+            <li class="list-group-item">First show</li>
+            <li class="list-group-item">Second show</li>
+            <li class="list-group-item">Third show</li>
+          </ul>
+          <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer>
+      <a data-toggle="modal" data-target="#about">About tour(206)</a>
+    </footer>
+
+    <!-- Modal -->
+    <div id="about" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">tour(206)</h4>
+          </div>
+          <div class="modal-body">
+            <p>Created by Maya Goldstein and David Gardner for General Assembly WDIr-Gizmo, Sept 2017</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
+
 </html>

@@ -23,8 +23,7 @@
   <body ng-controller="mainController as ctrl" class="">
   <!-- Bootstrap container div  -->
     <div class="container">
-  <!-- Login button -->
-      <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#login"> Login</a>
+
       <!-- Modal -->
       <div id="login" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -56,8 +55,7 @@
           </div>
         </div>
       </div>
-    <!-- register button -->
-      <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register"> Register</a>
+
       <!-- Modal -->
       <div id="register" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -90,14 +88,23 @@
         </div>
       </div>
 
-      <div class="page-header">
-        <h1><code>tour(206)</code> <small> // let the music find you</small></h1>
-      </div>
 
-      <blockquote cite="Nietzsche" class="">
+        <!-- Login button -->
+        <div class="text-right">
+          <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login"> Login</a>
+          <!-- Register Button -->
+          <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register"> Register</a>
+        </div>
+        <div class="page-header">
+          <h1><code>tour(206)</code> <small> // let the music find you</small></h1>
+        </div>
+
+
+
+      <!-- <blockquote cite="Nietzsche" class="">
         <p>Without music, life would be a mistake.</p>
         <footer>Friedrich Nietzsche</footer>
-      </blockquote>
+      </blockquote> -->
 
 
       <p>Using Angular JS... {{ctrl.word}}.</p>

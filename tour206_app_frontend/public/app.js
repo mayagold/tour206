@@ -57,7 +57,12 @@ app.controller('mainController', ['$http', function($http){
       self.currentUser.email = self.formdata.email;
       self.currentUser.password = self.formdata.password;
     }.bind(this));
+  }
 
+  this.logout = function(){
+    localStorage.clear('token');
+    location.reload();
+    console.log(self.currentUser);
   }
 
   // this.register = function(){

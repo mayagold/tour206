@@ -27,6 +27,7 @@
   <body ng-controller="mainController as ctrl" class="">
   <!-- Bootstrap container div  -->
     <div class="container">
+      <p>Logged in as {{ctrl.currentUser.username}}</p>
 
       <!-- Modal -->
       <div id="login" class="modal fade" role="dialog">
@@ -38,7 +39,11 @@
               <h4 class="modal-title">tour(206) // login</h4>
             </div>
             <div class="modal-body">
-              <form ng-submit="ctrl.login()">
+              <form ng-submit="ctrl.login(formdata)">
+                <div class="form-group">
+                  <label for="names">Username:</label>
+                  <input ng-model="ctrl.formdata.username" type="text" class="form-control" id="names">
+                </div>
                 <div class="form-group">
                   <label for="email">Email address:</label>
                   <input ng-model="ctrl.formdata.email" type="email" class="form-control" id="email">
@@ -50,7 +55,7 @@
                 <div class="checkbox">
                   <label><input type="checkbox"> Remember me</label>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default" >Submit</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -71,6 +76,10 @@
             </div>
             <div class="modal-body">
               <form ng-submit="ctrl.register()">
+                <div class="form-group">
+                  <label for="names">Username:</label>
+                  <input ng-model="ctrl.formdata.names" type="text" class="form-control" id="names">
+                </div>
                 <div class="form-group">
                   <label for="email">Email address:</label>
                     <input ng-model="ctrl.formdata.email" type="email" class="form-control" id="email">

@@ -9,13 +9,17 @@
     <!-- Bootstrap: Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- jQuery library -->
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap: Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Angular Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <!-- Link to app.js file -->
+
     <script type="text/javascript" src="app.js">
+
     </script>
     <title></title>
   </head>
@@ -109,6 +113,12 @@
 
       <p>Using Angular JS... {{ctrl.word}}.</p>
 
+      <div ng-repeat="event in ctrl.events" class="list-group">
+        <h3>{{event}}</h3>
+      </div>
+      <!-- <script>
+ var number = <%= @events %>;
+</script> -->
 
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#venues">Venues</a></li>
@@ -155,6 +165,7 @@
         <div id="myshows" class="tab-pane fade">
           <h1>My Shows</h1>
           <p>User can filter: <input/>  <span class="glyphicon glyphicon-search"></span></p>
+
           <ul class="list-group">
             <li class="list-group-item">First show</li>
             <li class="list-group-item">Second show</li>

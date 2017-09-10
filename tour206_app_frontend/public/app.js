@@ -5,13 +5,12 @@ var app = angular.module('tour-app', []);
 app.controller('mainController', ['$http', function($http){
   const self    = this;
 
-  this.word        = "sup";
   this.shows       = [];
   this.venues      = [];
   this.myshows     = [];
   this.formdata    = {};
   this.users       = [];
-  this.currentUser = {};
+  this.user        = {};
   this.url         = 'http://localhost:3000';
 
   // // GET SHOWS DATA
@@ -41,23 +40,53 @@ app.controller('mainController', ['$http', function($http){
   //   this.users = response.data;
   // }.bind(this));
 
-  // this is grabbing the form input data but sessions is not yet set up.
+    // Attach this function to user-authorized content
+    this.getUsers = function(){
+      $http({
+        url: this.url + '/users',
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+        }
+      }).then(function(response){
+        if (response.data.status==401){
+          this.error = "UNAUTHORIZED";
+        } else {
+          this.users = response.data;
+        }
+      }.bind(this));
+    }
 
-  this.login    = function(formdata){
-    console.log('logging in...');
-    console.log('Formdata: ', this.formdata);
+  // Log In Function
+  this.login = function(userPass){
+    console.log('User Entered Info: ', userPass);
+
     $http({
       method: 'POST',
       url: this.url + '/users/login',
-      data: { user: { username: self.formdata.username, email: self.formdata.email, password: self.formdata.password }},
+      data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-      console.log(response);
+      console.log(response.data);
+      this.user =response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
-      self.currentUser.username = self.formdata.username;
-      self.currentUser.email = self.formdata.email;
-      self.currentUser.password = self.formdata.password;
     }.bind(this));
   }
+
+
+  // Register function
+
+  this.register = function(userPass){
+    console.log('registering...');
+    console.log('Formdata: ', userPass)
+    $http({
+      method: 'POST',
+      url: this.url + '/users',
+      data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
+    }).then(function(result){
+      console.log('Data from server: ', result)
+    })
+  }
+
 
   this.logout = function(){
     localStorage.clear('token');
@@ -65,17 +94,6 @@ app.controller('mainController', ['$http', function($http){
     console.log(self.currentUser);
   }
 
-  // this.register = function(){
-  //   console.log('registering...');
-  //   console.log('Formdata: ', this.formdata);
-  //   $http({
-  //     method: 'POST',
-  //     url: 'http://localhost:3000/users',
-  //     data: this.formdata
-  //   }).then(function(result){
-  //     self.currentUser = self.formdata;
-  //     self.formdata = {};
-  //     console.log('Data from server: '), result})
-  // }
+
 
 }])

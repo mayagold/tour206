@@ -23,7 +23,7 @@
   <body ng-controller="mainController as ctrl" class="">
   <!-- Bootstrap container div  -->
     <div class="container">
-      <p>Logged in as {{ctrl.currentUser.username}}</p>
+      <p>Logged in as {{ctrl.user.username}}</p>
 
       <!-- Modal -->
       <div id="login" class="modal fade" role="dialog">
@@ -35,18 +35,18 @@
               <h4 class="modal-title">tour(206) // login</h4>
             </div>
             <div class="modal-body">
-              <form ng-submit="ctrl.login(formdata)">
+              <form ng-submit="ctrl.login(userPass)">
                 <div class="form-group">
                   <label for="names">Username:</label>
-                  <input ng-model="ctrl.formdata.username" type="text" class="form-control" id="names">
+                  <input ng-model="userPass.username" type="text" class="form-control" id="names">
                 </div>
                 <div class="form-group">
                   <label for="email">Email address:</label>
-                  <input ng-model="ctrl.formdata.email" type="email" class="form-control" id="email">
+                  <input ng-model="userPass.email" type="email" class="form-control" id="email">
                 </div>
                 <div class="form-group">
                   <label for="pwd">Password:</label>
-                  <input ng-model="ctrl.formdata.password" type="password" class="form-control" id="pwd">
+                  <input ng-model="userPass.password" type="password" class="form-control" id="pwd">
                 </div>
                 <div class="checkbox">
                   <label><input type="checkbox"> Remember me</label>
@@ -64,25 +64,25 @@
       <!-- Modal -->
       <div id="register" class="modal fade" role="dialog">
         <div class="modal-dialog">
-        <!-- Modal: Login -->
+        <!-- Modal: Reg -->
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">tour(206) // login</h4>
+              <h4 class="modal-title">tour(206) // register</h4>
             </div>
             <div class="modal-body">
-              <form ng-submit="ctrl.register()">
+              <form ng-submit="ctrl.register(userPass)">
                 <div class="form-group">
                   <label for="names">Username:</label>
-                  <input ng-model="ctrl.formdata.names" type="text" class="form-control" id="names">
+                  <input ng-model="userPass.username" type="text" class="form-control" id="names">
                 </div>
                 <div class="form-group">
                   <label for="email">Email address:</label>
-                    <input ng-model="ctrl.formdata.email" type="email" class="form-control" id="email">
+                    <input ng-model="userPass.email" type="email" class="form-control" id="email">
                 </div>
                 <div class="form-group">
                   <label for="pwd">Password:</label>
-                  <input ng-model="ctrl.formdata.password" type="password" class="form-control" id="pwd">
+                  <input ng-model="userPass.password" type="password" class="form-control" id="pwd">
                 </div>
                 <div class="checkbox">
                   <label><input type="checkbox"> Remember me</label>

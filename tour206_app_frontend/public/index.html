@@ -137,14 +137,23 @@
             <li><a href="#">5</a></li>
           </ul>
         </div>
+
         <div id="shows" class="tab-pane fade">
           <h1>Shows</h1>
           <p>User can filter: <input/> <span class="glyphicon glyphicon-search"></span></p>
-          <ul class="list-group">
-            <li class="list-group-item">First show</li>
-            <li class="list-group-item">Second show</li>
-            <li class="list-group-item">Third show</li>
-          </ul>
+
+          <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local'" class="list-group">
+            <p class="list-group-item">
+              <a href="#" class="glyphicon glyphicon-music" title="Save to My Shows" ng-click="ctrl.favoriteShow();"></a>
+              <strong>{{event.name.text}}</strong>
+            </p>
+            <p class="list-group-item">{{event.start.local | date:'MM/dd/yyyy @ h:mma'}}</p>
+            <p class="list-group-item" id="event-description" ng-init="limit=200">
+              {{event.description.text | limitTo: limit }}
+              <code ng-click="limit=Number.MAX_SAFE_INTEGER"> expand/collapse </code><br/>
+              <img src="{{event.logo.url}}" alt="">
+            </p>
+          </div>
           <ul class="pagination">
             <li><a href="#">1</a></li>
             <li><a href="#">2</a></li>
@@ -152,7 +161,9 @@
             <li><a href="#">4</a></li>
             <li><a href="#">5</a></li>
           </ul>
+
         </div>
+
         <div id="myshows" class="tab-pane fade">
           <h1>My Shows</h1>
           <p>User can filter: <input/>  <span class="glyphicon glyphicon-search"></span></p>

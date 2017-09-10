@@ -2,18 +2,20 @@ console.log('hi');
 
 var app = angular.module('tour-app', []);
 
+app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
+
 app.controller('mainController', ['$http', function($http){
   const self    = this;
 
-  this.word        = "sup";
   this.shows       = [];
   this.venues      = [];
-  this.myshows     = [];
   this.formdata    = {};
   this.users       = [];
-  this.currentUser = {};
+  this.user        = {};
   this.url         = 'http://localhost:3000';
-
+  this.loggedIn    = false;
   // // GET SHOWS DATA
   // $http({
   //   method: 'GET',
@@ -41,36 +43,65 @@ app.controller('mainController', ['$http', function($http){
   //   this.users = response.data;
   // }.bind(this));
 
-  // this is grabbing the form input data but sessions is not yet set up.
+    // Attach this function to user-authorized content
+  this.getUsers = function(){
+    $http({
+      url: this.url + '/users',
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+      }
+    }).then(function(response){
+      if (response.data.status==401){
+        this.error = "UNAUTHORIZED";
+      } else {
+        this.users = response.data;
+      }
+    }.bind(this));
+  }
 
-  this.login    = function(formdata){
-    console.log('logging in...');
-    console.log('Formdata: ', this.formdata);
+  // Log In Function
+  this.login = function(userPass){
+    console.log('User Entered Info: ', userPass);
+
     $http({
       method: 'POST',
-      url: this.url + '/users/login',
-      data: { user: { username: self.formdata.username, email: self.formdata.email, password: self.formdata.password }},
+      url: self.url + '/users/login',
+      data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-      console.log(response);
+      console.log(response.data);
+      self.loggedIn = true;
+      self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
-      self.currentUser.username = self.formdata.username;
-      self.currentUser.email = self.formdata.email;
-      self.currentUser.password = self.formdata.password;
     }.bind(this));
+
+    // Still need to implement:  another ajax request using user id after login successful ( user’s data [favorited shows] is then populated and the My Plans tab has data )
 
   }
 
-  // this.register = function(){
-  //   console.log('registering...');
-  //   console.log('Formdata: ', this.formdata);
-  //   $http({
-  //     method: 'POST',
-  //     url: 'http://localhost:3000/users',
-  //     data: this.formdata
-  //   }).then(function(result){
-  //     self.currentUser = self.formdata;
-  //     self.formdata = {};
-  //     console.log('Data from server: '), result})
-  // }
+
+  // Register function:: Create a new user
+
+  this.register = function(userReg){
+
+    $http({
+      method: 'POST',
+      url: self.url + '/users/',
+      data: { user: { username: userReg.username, email: userReg.email, password: userReg.password }},
+    }).then(function(result){
+      console.log('Data from server: ', result)
+    })
+  }
+
+
+
+  this.logout = function(){
+    localStorage.clear('token');
+    location.reload();
+    self.loggedIn = false;
+    console.log(self.currentUser);
+  }
+
+
 
 }])

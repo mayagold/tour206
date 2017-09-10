@@ -162,9 +162,9 @@
           <h1>Shows</h1>
           <p>User can filter: <input/> <span class="glyphicon glyphicon-search"></span></p>
           <ul ng-repeat="event in ctrl.events | orderBy:'end.utc'" class="list-group">
-            <li class="list-group-item"><strong>{{event.name.text}}</strong><br /> <br />
-          {{event.end.utc | date:'MM/dd/yyyy @ h:mma'}} <br /> <br />
-          {{event.description.text}}<br /> <br /></li>
+            <li class="list-group-item"><strong>{{event.name.text}}</strong><br /> <br /></li>
+          <li>{{event.end.utc | date:'MM/dd/yyyy @ h:mma'}}</li>
+          <li id="event-description" ng-init="limit=200">{{event.description.text | limitTo: limit }}<code ng-click="limit=Number.MAX_SAFE_INTEGER">...</code></li>
           </ul>
           <ul class="pagination">
             <li><a href="#">1</a></li>

@@ -11,11 +11,11 @@ app.controller('mainController', ['$http', function($http){
 
   this.shows       = [];
   this.venues      = [];
-  this.myshows     = [];
   this.formdata    = {};
   this.users       = [];
   this.user        = {};
   this.url         = 'http://localhost:3000';
+  this.loggedIn    = false;
   // // GET SHOWS DATA
   // $http({
   //   method: 'GET',
@@ -70,9 +70,13 @@ app.controller('mainController', ['$http', function($http){
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
       console.log(response.data);
+      self.loggedIn = true;
       self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
     }.bind(this));
+
+    // Still need to implement:  another ajax request using user id after login successful (user’s data [shows] is then populated)
+
   }
 
 
@@ -94,6 +98,7 @@ app.controller('mainController', ['$http', function($http){
   this.logout = function(){
     localStorage.clear('token');
     location.reload();
+    self.loggedIn = false;
     console.log(self.currentUser);
   }
 

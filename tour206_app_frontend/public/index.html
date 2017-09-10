@@ -100,11 +100,11 @@
 
         <!-- Login button -->
         <div class="text-right">
-          <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login"> Log In</a>
+          <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"> Log In</a>
           <!-- Register Button -->
-          <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register"> Register</a>
+          <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"> Register</a>
           <!-- logout button -->
-          <a href="#" class="btn btn-primary btn-sm text-right" ng-click="ctrl.logout();">Log Out</a>
+          <a href="#" class="btn btn-primary btn-sm text-right" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();">Log Out</a>
         </div>
         <div class="page-header">
           <h1><code>tour(206)</code> <small> // let the music find you</small></h1>

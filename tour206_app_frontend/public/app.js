@@ -2,6 +2,10 @@ console.log('hi');
 
 var app = angular.module('tour-app', []);
 
+app.config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
+
 app.controller('mainController', ['$http', function($http){
   const self    = this;
 
@@ -12,7 +16,6 @@ app.controller('mainController', ['$http', function($http){
   this.users       = [];
   this.user        = {};
   this.url         = 'http://localhost:3000';
-
   // // GET SHOWS DATA
   // $http({
   //   method: 'GET',
@@ -63,11 +66,11 @@ app.controller('mainController', ['$http', function($http){
 
     $http({
       method: 'POST',
-      url: this.url + '/users/login',
+      url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
       console.log(response.data);
-      this.user =response.data.user;
+      self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
     }.bind(this));
   }
@@ -75,17 +78,17 @@ app.controller('mainController', ['$http', function($http){
 
   // Register function
 
-  this.register = function(userPass){
-    console.log('registering...');
-    console.log('Formdata: ', userPass)
-    $http({
-      method: 'POST',
-      url: this.url + '/users',
-      data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
-    }).then(function(result){
-      console.log('Data from server: ', result)
-    })
-  }
+  // this.register = function(userPass){
+  //   console.log('registering...');
+  //   console.log('Formdata: ', userPass)
+  //   $http({
+  //     method: 'POST',
+  //     url: self.url + '/users',
+  //     data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
+  //   }).then(function(result){
+  //     console.log('Data from server: ', result)
+  //   })
+  // }
 
 
   this.logout = function(){

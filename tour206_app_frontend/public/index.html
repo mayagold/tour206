@@ -161,10 +161,10 @@
         <div id="shows" class="tab-pane fade">
           <h1>Shows</h1>
           <p>User can filter: <input/> <span class="glyphicon glyphicon-search"></span></p>
-          <ul class="list-group">
-            <li class="list-group-item">First show</li>
-            <li class="list-group-item">Second show</li>
-            <li class="list-group-item">Third show</li>
+          <ul ng-repeat="event in ctrl.events | orderBy:'end.utc'" class="list-group">
+            <li class="list-group-item"><strong>{{event.name.text}}</strong><br /> <br />
+          {{event.end.utc | date:'MM/dd/yyyy @ h:mma'}} <br /> <br />
+          {{event.description.text}}<br /> <br /></li>
           </ul>
           <ul class="pagination">
             <li><a href="#">1</a></li>
@@ -178,6 +178,10 @@
         <div id="myshows" class="tab-pane fade">
           <h1>My Shows</h1>
           <p>User can filter: <input/>  <span class="glyphicon glyphicon-search"></span></p>
+
+
+
+
 
           <ul class="list-group">
             <li class="list-group-item">First show</li>
@@ -222,11 +226,13 @@
     </div>
 
 
-    <div ng-repeat="event in ctrl.events">
-      <p><strong>{{event.name.text}}</strong></p>
-      <p>{{event.end.utc}}</p>
-      <p>{{event.description.text}}</p>
+    <!-- <div ng-repeat="event in ctrl.events | orderBy:'end.utc'">
+      <div>
+        <strong>{{event.name.text}}</strong><br /> <br />
+      {{event.end.utc | date:'MM/dd/yyyy @ h:mma'}} <br /> <br />
+      {{event.description.text}}<br /> <br />
     </div>
+    </div> -->
 
   </body>
 

@@ -8,7 +8,6 @@ app.config(['$qProvider', function ($qProvider) {
 
 app.controller('mainController', ['$http', function($http){
   const self    = this;
-
   this.shows       = [];
   this.venues      = [];
   this.formdata    = {};
@@ -63,7 +62,6 @@ app.controller('mainController', ['$http', function($http){
   // Log In Function
   this.login = function(userPass){
     console.log('User Entered Info: ', userPass);
-
     $http({
       method: 'POST',
       url: self.url + '/users/login',
@@ -75,25 +73,30 @@ app.controller('mainController', ['$http', function($http){
       localStorage.setItem('token', JSON.stringify(response.data.token));
     }.bind(this));
 
-    // Still need to implement:  another ajax request using user id after login successful ( user’s data [favorited shows] is then populated and the My Plans tab has data )
+    // Still need to implement another ajax request using user id here, after login successful, through which user’s data [favorited shows, saved into backend server] is populated and the My Plans tab data is populated with user's favorited shows
 
   }
 
 
-  // Register function:: Create a new user
+  // Register function:: This does not work: function responds "status code 422 Unprocessable Entity"
 
   this.register = function(userReg){
 
     $http({
       method: 'POST',
       url: self.url + '/users/',
-      data: { user: { username: userReg.username, email: userReg.email, password: userReg.password }},
+      data: { user: { username: userReg.username, email: userReg.email, password_digest: userReg.password }},
     }).then(function(result){
       console.log('Data from server: ', result)
+
+      // user should be logged in immediately after sign up (doesn’t have to log in after signing up)
     })
+
+
   }
 
 
+  // Log Out function: this works and button only displays when a user is logged in
 
   this.logout = function(){
     localStorage.clear('token');
@@ -102,6 +105,4 @@ app.controller('mainController', ['$http', function($http){
     console.log(self.currentUser);
   }
 
-
-
-}])
+}]) // end main controller

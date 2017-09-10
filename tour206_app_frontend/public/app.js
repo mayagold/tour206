@@ -44,21 +44,21 @@ app.controller('mainController', ['$http', function($http){
   // }.bind(this));
 
     // Attach this function to user-authorized content
-    this.getUsers = function(){
-      $http({
-        url: this.url + '/users',
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
-        }
-      }).then(function(response){
-        if (response.data.status==401){
-          this.error = "UNAUTHORIZED";
-        } else {
-          this.users = response.data;
-        }
-      }.bind(this));
-    }
+  this.getUsers = function(){
+    $http({
+      url: this.url + '/users',
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+      }
+    }).then(function(response){
+      if (response.data.status==401){
+        this.error = "UNAUTHORIZED";
+      } else {
+        this.users = response.data;
+      }
+    }.bind(this));
+  }
 
   // Log In Function
   this.login = function(userPass){
@@ -75,24 +75,24 @@ app.controller('mainController', ['$http', function($http){
       localStorage.setItem('token', JSON.stringify(response.data.token));
     }.bind(this));
 
-    // Still need to implement:  another ajax request using user id after login successful (user’s data [shows] is then populated)
+    // Still need to implement:  another ajax request using user id after login successful ( user’s data [favorited shows] is then populated and the My Plans tab has data )
 
   }
 
 
-  // Register function
+  // Register function:: Create a new user
 
-  // this.register = function(userPass){
-  //   console.log('registering...');
-  //   console.log('Formdata: ', userPass)
-  //   $http({
-  //     method: 'POST',
-  //     url: self.url + '/users',
-  //     data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
-  //   }).then(function(result){
-  //     console.log('Data from server: ', result)
-  //   })
-  // }
+  this.register = function(userReg){
+
+    $http({
+      method: 'POST',
+      url: self.url + '/users/',
+      data: { user: { username: userReg.username, email: userReg.email, password: userReg.password }},
+    }).then(function(result){
+      console.log('Data from server: ', result)
+    })
+  }
+
 
 
   this.logout = function(){

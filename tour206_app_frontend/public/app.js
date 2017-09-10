@@ -4,22 +4,9 @@ var app = angular.module('tour-app', []);
 
 app.controller('mainController', ['$http', function($http){
   const self    = this;
-
-<<<<<<< HEAD
-
   this.word     = "sup";
   this.myshows  = [];
   this.formdata = {};
-
-  $http({
-    method: 'GET',
-    url: 'http://localhost:3000/events/index'
-  }).then(response => {
-    console.log(response)
-    this.events = response.data.top_match_events
-  })
-  .catch(err => console.log(err));
-=======
   this.word        = "sup";
   this.shows       = [];
   this.venues      = [];
@@ -28,6 +15,17 @@ app.controller('mainController', ['$http', function($http){
   this.users       = [];
   this.currentUser = {};
   this.url         = 'http://localhost:3000';
+
+  $http({
+    method: 'GET',
+    url: 'http://localhost:3000/events/index'
+  }).then(response => {
+    console.log('this is the response ', response.data.events)
+    this.events = response.data.events
+    this.topmatch = response.data.top_match_events
+  })
+  .catch(err => console.log(err));
+
 
   // // GET SHOWS DATA
   // $http({
@@ -55,7 +53,7 @@ app.controller('mainController', ['$http', function($http){
   //   console.log(response);
   //   this.users = response.data;
   // }.bind(this));
->>>>>>> 0ed0c1fa21f88c2d0048fd23ff48c17cf07a0e2f
+
 
   // this is grabbing the form input data but sessions is not yet set up.
 

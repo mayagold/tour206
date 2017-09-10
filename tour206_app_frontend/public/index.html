@@ -29,6 +29,9 @@
     <div class="container">
       <p>Logged in as {{ctrl.currentUser.username}}</p>
 
+
+
+
       <!-- Modal -->
       <div id="login" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -120,11 +123,12 @@
       </blockquote> -->
 
 
+
       <p>Using Angular JS... {{ctrl.word}}.</p>
 
-      <div ng-repeat="event in ctrl.events" class="list-group">
-        <h3>{{event}}</h3>
-      </div>
+
+
+
       <!-- <script>
  var number = <%= @events %>;
 </script> -->
@@ -215,6 +219,13 @@
           </div>
         </div>
       </div>
+    </div>
+
+
+    <div ng-repeat="event in ctrl.events">
+      <p><strong>{{event.name.text}}</strong></p>
+      <p>{{event.end.utc}}</p>
+      <p>{{event.description.text}}</p>
     </div>
 
   </body>

@@ -15,6 +15,8 @@ app.controller('mainController', ['$http', function($http){
   this.user        = {};
   this.url         = 'http://localhost:3000';
   this.loggedIn    = false;
+
+
   // // GET SHOWS DATA
   // $http({
   //   method: 'GET',
@@ -42,22 +44,23 @@ app.controller('mainController', ['$http', function($http){
   //   this.users = response.data;
   // }.bind(this));
 
-    // Attach this function to user-authorized content
-  this.getUsers = function(){
-    $http({
-      url: this.url + '/users',
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
-      }
-    }).then(function(response){
-      if (response.data.status==401){
-        this.error = "UNAUTHORIZED";
-      } else {
-        this.users = response.data;
-      }
-    }.bind(this));
-  }
+
+  // Attach this function to user-authorized content
+  // this.getUsers = function(){
+  //   $http({
+  //     url: this.url + '/users',
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
+  //     }
+  //   }).then(function(response){
+  //     if (response.data.status==401){
+  //       this.error = "UNAUTHORIZED";
+  //     } else {
+  //       this.users = response.data;
+  //     }
+  //   }.bind(this));
+  // }
 
   // Log In Function
   this.login = function(userPass){
@@ -77,27 +80,20 @@ app.controller('mainController', ['$http', function($http){
 
   }
 
-
   // Register function:: This does not work: function responds "status code 422 Unprocessable Entity"
-
   this.register = function(userReg){
-
     $http({
       method: 'POST',
       url: self.url + '/users/',
-      data: { user: { username: userReg.username, email: userReg.email, password_digest: userReg.password }},
+      data: { user: { username: userReg.username, email: userReg.email, password: userReg.password }},
     }).then(function(result){
-      console.log('Data from server: ', result)
-
-      // user should be logged in immediately after sign up (doesn’t have to log in after signing up)
+      console.log('Data from server: ', result);
+      self.login(userReg);
+      // user should be logged in immediately after sign up!
     })
-
-
   }
 
-
   // Log Out function: this works and button only displays when a user is logged in
-
   this.logout = function(){
     localStorage.clear('token');
     location.reload();

@@ -91,15 +91,18 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   // DELETE ROUTE
   $scope.unfavoriteShow = function(myshow){
     $scope.currentShow = myshow;
-    console.log($scope.currentShow);
+    // console.log($scope.currentShow);
     let id = $scope.currentShow.id;
-    console.log(id);
+    // find the index of the item in the myshows array
+    let index = self.myshows.indexOf($scope.currentShow);
+    // console.log(id);
     $http({
       method: 'DELETE',
       url: self.url + '/shows/' + id,
     }).then(response=>{
       console.log(response);
       console.log('delete route');
+      self.myshows.splice(index, 1);
     }).catch(err=>console.log(err))
   }
 

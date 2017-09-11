@@ -188,9 +188,9 @@
           </select> shows per page.
           <br/><br/>
           <!-- data content -->
-          <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local' | filter: q | startFrom: currentPage*pageSize | limitTo: pageSize" class="list-group" ng-model="currentEvent">
+          <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local' | filter: q | startFrom: currentPage*pageSize | limitTo: pageSize" class="list-group" >
             <p class="list-group-item">
-              <a href="#" class="glyphicon glyphicon-music" title="Save to My Shows" ng-click="favoriteShow();"></a>
+              <a href="#" class="glyphicon glyphicon-music" title="Save to My Shows" ng-click="favoriteShow(event);"></a>
               <strong>{{event.name.text}}</strong>
             </p>
             <p class="list-group-item">{{event.start.local | date:'MM/dd/yyyy @ h:mma'}}</p>
@@ -226,11 +226,17 @@
           </select> shows per page.
           <br/><br/>
           <!-- data content -->
-          <ul class="list-group">
-            <li class="list-group-item">First show</li>
-            <li class="list-group-item">Second show</li>
-            <li class="list-group-item">Third show</li>
-          </ul>
+          <div class="list-group" ng-repeat="myshow in ctrl.myshows">
+            <p class="list-group-item">
+              <a href="#" class="glyphicon glyphicon-music"></a>
+              <strong>{{myshow.name}}</strong>
+            </p>
+            <p class="list-group-item">{{myshow.start | date:'MM/dd/yyyy @ h:mma'}}</p>
+            <p class="list-group-item" id="myshow-description" ng-init="limit=200">
+              {{myshow.description | limitTo: limit }}
+              <code ng-click="limit=Number.MAX_SAFE_INTEGER"> expand/collapse </code><br/>
+            </p>
+          </div>
           <!-- Pagination -->
           <ul class="pager">
             <li><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; Previous</a></li>

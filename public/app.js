@@ -18,6 +18,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.pageSize = 10;
   $scope.data = [];
   $scope.q = '';
+  $scope.currentEvent = {};
 
 
   const self       = this;
@@ -54,30 +55,33 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   })
   .catch(err => console.log(err));
 
-
-
   // CREATE: POST request: grabs the show that the user wants to save and create a new Shows model
-  $scope.favoriteShow = function(){
+  $scope.favoriteShow = function(event){
+    // console.log($scope);
+    // console.log(event);
+    $scope.currentEvent = event;
     // THIS IS THE DATA ON THE PAGE WE WANT TO GRAB
     // show.name
-    console.log(typeof $scope.$$childHead.event.name.text)
-    // show.start
-    console.log(typeof $scope.$$childHead.event.start.local);
-    // show.description
-    console.log(typeof $scope.$$childHead.event.description.text);
-    console.log(typeof self.user.id);
+    // console.log($scope.currentEvent.name.text);
+    // // show.start
+    // console.log( $scope.currentEvent.start.local);
+    // // show.description
+    // console.log( $scope.currentEvent.description.text);
+    // console.log(typeof self.user.id);
     // POST REQUEST
     $http({
       method: 'POST',
       url: self.url + '/shows',
       data: {show: {
-        name: $scope.$$childHead.event.name.text,
-        start: $scope.$$childHead.event.start.local,
-        description: $scope.$$childHead.event.description.text,
+        name: $scope.currentEvent.name.text,
+        start: $scope.currentEvent.start.local,
+        description: $scope.currentEvent.description.text,
         user_id: self.user.id
       }},
     }).then(response=>{
-      console.log(response);
+      // console.log(response.data);
+      self.myshows.unshift(response.data);
+      // console.log("array ,", self.myshows);
     }).catch(err=>console.log(err))
   }
 
@@ -158,6 +162,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     location.reload();
     self.loggedIn = false;
     console.log(self.currentUser);
+    this.myshows = [];
   }
 
   this.favoriteShow = function(){

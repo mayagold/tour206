@@ -25,12 +25,13 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.q              = '';
   $scope.currentEvent   = {};
   $scope.currentShow    = {};
+  $scope.updatingShow   = {};
 
   // declare variables
   this.url         = 'http://localhost:3000';
   const self       = this;
   this.loggedIn    = false;
-  this.formdata    = {};
+  this.formdata    = '';
   this.user        = {};
   this.myshows     = [];
   this.venues      = [];
@@ -93,16 +94,38 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     $scope.currentShow = myshow;
     // console.log($scope.currentShow);
     let id = $scope.currentShow.id;
-    // find the index of the item in the myshows array
     let index = self.myshows.indexOf($scope.currentShow);
     // console.log(id);
     $http({
       method: 'DELETE',
       url: self.url + '/shows/' + id,
     }).then(response=>{
-      console.log(response);
-      console.log('delete route');
+      // console.log(response);
+      // console.log('delete route');
       self.myshows.splice(index, 1);
+    }).catch(err=>console.log(err))
+  }
+
+  $scope.updateShow = function(myshow){
+    $scope.updatingShow = myshow;
+    console.log($scope.updatingShow);
+  }
+
+  $scope.updateDescription = function(){
+    console.log($scope.updatingShow);
+    id = $scope.updatingShow.id;
+    console.log($scope);
+    $http({
+      method: 'PUT',
+      url: self.url + '/shows/' + id,
+      data: {show: {
+        name: $scope.updatingShow.name,
+        start: $scope.updatingShow.start,
+        description: self.formdata,
+        user_id: $scope.updatingShow.user_id,
+      }}
+    }).then(response=>{
+      console.log(response);
     }).catch(err=>console.log(err))
   }
 
@@ -111,7 +134,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     method: 'GET',
     url: self.url + '/shows'
   }).then(response => {
-    console.log('this is the response ', response)
+    // console.log('this is the response ', response)
   })
   .catch(err => console.log(err));
 
@@ -146,13 +169,13 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 
   // Log In Function
   this.login = function(userPass){
-    console.log('User Entered Info: ', userPass);
+    // console.log('User Entered Info: ', userPass);
     $http({
       method: 'POST',
       url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-      console.log(response.data);
+      // console.log(response.data);
       self.loggedIn = true;
       self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
@@ -162,20 +185,20 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       method: 'GET',
       url: self.url + '/shows',
     }).then(function(result){
-      console.log(result.data, " ... trying to call shows");
-      console.log(result.data.length);
-      console.log(result.data[0].user_id);
-      console.log(self.user.id);
+      // console.log(result.data, " ... trying to call shows");
+      // console.log(result.data.length);
+      // console.log(result.data[0].user_id);
+      // console.log(self.user.id);
       for (let i=1; i<=result.data.length; i++){
-        console.log("testing result data item #", i);
-        console.log("user id of result data is ", result.data[i].user_id);
-        console.log("user id of user is ", self.user.id);
+        // console.log("testing result data item #", i);
+        // console.log("user id of result data is ", result.data[i].user_id);
+        // console.log("user id of user is ", self.user.id);
         if (result.data[i].user_id === self.user.id){
-          console.log("SAME");
+          // console.log("SAME");
           self.myshows.unshift(result.data[i]);
         }
       }
-      console.log(self.myshows);
+      // console.log(self.myshows);
     })
   }
   // Register function

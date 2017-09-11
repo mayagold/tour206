@@ -7,24 +7,26 @@ app.config(['$qProvider', function ($qProvider) {
 }]);
 
 app.controller('mainController', ['$http', function($http){
-  const self    = this;
-  this.shows       = [];
+  const self       = this;
+  this.myshows     = [];
   this.venues      = [];
   this.formdata    = {};
   this.users       = [];
   this.user        = {};
   this.url         = 'http://localhost:3000';
   this.loggedIn    = false;
+  this.events      = [];
 
-
-  // // GET SHOWS DATA
-  // $http({
-  //   method: 'GET',
-  //   url: 'http://localhost:3000/shows',
-  // }).then(function(response){
-  //   console.log(response);
-  //   this.shows = response.data;
-  // }.bind(this));
+  // GET SHOWS: Calls eventbrite API
+  $http({
+    method: 'GET',
+    url: self.url + '/events/index'
+  }).then(response => {
+    console.log('this is the response ', response.data.events)
+    this.events = response.data.events
+    this.topmatch = response.data.top_match_events
+  })
+  .catch(err => console.log(err));
   //
   // // GET VENUES DATA
   // $http({
@@ -35,16 +37,9 @@ app.controller('mainController', ['$http', function($http){
   //   this.venues = response.data;
   // }.bind(this));
   //
-  // // GET USERS DATA
-  // $http({
-  //   method: 'GET',
-  //   url: 'http://localhost:3000/users',
-  // }).then(function(response){
-  //   console.log(response);
-  //   this.users = response.data;
-  // }.bind(this));
 
 
+  //
   // Attach this function to user-authorized content
   // this.getUsers = function(){
   //   $http({
@@ -61,6 +56,7 @@ app.controller('mainController', ['$http', function($http){
   //     }
   //   }.bind(this));
   // }
+  // this.getUsers();
 
   // Log In Function
   this.login = function(userPass){
@@ -99,6 +95,23 @@ app.controller('mainController', ['$http', function($http){
     location.reload();
     self.loggedIn = false;
     console.log(self.currentUser);
+  }
+
+  this.favoriteShow = function(){
+    
+    this.myshows.unshift(response.data)
+  }
+
+  this.saveShowsData = function(){
+    console.log('saved to my shows');
+    $http({
+      method: 'POST',
+      url: self.url + '/users/:id',
+      data: this.myshows
+    }).then(function(response){
+      console.log(response);
+      self.user.myshows.unshift(response.data)
+    }).catch(err=>console.log(err));
   }
 
 }]) // end main controller

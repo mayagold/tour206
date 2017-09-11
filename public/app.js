@@ -140,7 +140,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 }]) // end main controller
 
 
-// Pagination 
+// Pagination
 app.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int

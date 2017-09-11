@@ -19,3 +19,11 @@ User Stories
 1. Admin can view concerts happening in Seattle.
 2. Admin can create, update, and delete data for both venues and concerts.
 3. Admin is required to sign in with password authentication in order to access the admin app.
+
+---
+
+Bugs:
+
+0. Pagination lets you scroll thru negative pages... wtf...
+0. User post not working in heroku (might fix itself when we push to heroku master again)
+0. expand/collapse doesn't have a toggle yet

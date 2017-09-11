@@ -226,10 +226,11 @@
           </select> shows per page.
           <br/><br/>
           <!-- data content -->
-          <div class="list-group" ng-repeat="myshow in ctrl.myshows">
+          <div class="list-group" ng-repeat="myshow in ctrl.myshows" >
             <p class="list-group-item">
               <a href="#" class="glyphicon glyphicon-music"></a>
               <strong>{{myshow.name}}</strong>
+              <a href="#" class="button button-sm" title="Unfavorite" ng-click="unfavoriteShow(myshow);">Unfollow This Event</a>
             </p>
             <p class="list-group-item">{{myshow.start | date:'MM/dd/yyyy @ h:mma'}}</p>
             <p class="list-group-item" id="myshow-description" ng-init="limit=200">

@@ -24,6 +24,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.data           = [];
   $scope.q              = '';
   $scope.currentEvent   = {};
+  $scope.currentShow    = {};
 
   // declare variables
   this.url         = 'http://localhost:3000';
@@ -86,6 +87,22 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       // console.log("array ,", self.myshows);
     }).catch(err=>console.log(err))
   }
+
+  // DELETE ROUTE
+  $scope.unfavoriteShow = function(myshow){
+    $scope.currentShow = myshow;
+    console.log($scope.currentShow);
+    let id = $scope.currentShow.id;
+    console.log(id);
+    $http({
+      method: 'DELETE',
+      url: self.url + '/shows/' + id,
+    }).then(response=>{
+      console.log(response);
+      console.log('delete route');
+    }).catch(err=>console.log(err))
+  }
+
   // GET MY SHOWS
   $http({
     method: 'GET',
@@ -184,7 +201,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 // // // // // // // // // // // // // // // // // // //
 // Pagination functionality
 // // // // // // // // // // // // // // // // // // //
-
 app.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int

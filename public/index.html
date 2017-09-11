@@ -127,7 +127,7 @@
 
       <!-- Filler quote -->
       <blockquote cite="Nietzsche" class="">
-        <p>"Without music, [Seattle] life would be a mistake."</p>
+        <p>"Without music, [Seattle] would be a mistake."</p>
       </blockquote>
 
       <!-- Navigation tabs to click between venues, shows, and user's saved shows -->
@@ -143,19 +143,6 @@
         <!-- Tab content: Venues Page -->
         <div id="venues" class="tab-pane fade in active">
           <h1>Venues</h1>
-          <!-- Filter searchbox -->
-          <input ng-model="q" id="search" placeholder="Filter"> </input><span class="glyphicon glyphicon-search"></span>
-          <br/><br/>
-          <!-- Dropdown: User can choose how many venue entries display on one page -->
-          View <select ng-model="pageSize" id="pageSize">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="40">40</option>
-            <option value="50">50</option>
-          </select> venues per page.
-          <br/><br/>
           <!-- DATA CONTENT -->
           <ul class="list-group">
             <li class="list-group-item">First venue</li>
@@ -163,11 +150,6 @@
             <li class="list-group-item">Third venue</li>
           </ul>
 
-          <ul class="pager">
-            <li><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; Previous</a></li>
-            <li>{{currentPage+1}}/{{numberOfPages()}}</li>
-            <li><a href="#" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">Next &raquo;</a></li>
-          </ul>
         </div>
 
 
@@ -197,7 +179,7 @@
             <p class="list-group-item" id="event-description" ng-init="limit=200">
               {{event.description.text | limitTo: limit }}
               <code ng-click="limit=Number.MAX_SAFE_INTEGER"> expand/collapse </code><br/>
-              <img src="{{event.logo.url}}" alt="">
+              <img class="thumbnail" src="{{event.logo.url}}" alt="">
             </p>
           </div>
           <!-- Pagination -->
@@ -212,19 +194,7 @@
         <!-- Tab content: user's saved shows -->
         <div id="myshows" class="tab-pane fade">
           <h1>My Shows</h1>
-          <!-- filter searchbox -->
-          <input ng-model="q" id="search" placeholder="Search"> </input><span class="glyphicon glyphicon-search"></span>
-          <br/>
-          <!-- Dropdown: User can choose how many venue entries display on one page -->
-          View <select ng-model="pageSize" id="pageSize">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="40">40</option>
-            <option value="50">50</option>
-          </select> shows per page.
-          <br/><br/>
+          <h3 ng-hide="ctrl.loggedIn==true">Please log in to view your saved events.</h3>
           <!-- data content -->
           <div class="list-group" ng-repeat="myshow in ctrl.myshows" >
             <p class="list-group-item">
@@ -237,14 +207,9 @@
               {{myshow.description | limitTo: limit }}
               <code ng-click="limit=Number.MAX_SAFE_INTEGER"> expand/collapse </code><br/>
             </p>
-            <a href="#" class="button button-sm" title="Change Description" data-toggle="modal" data-target="#describe" ng-click="updateShow(myshow);">Add Your Own Description For This Event</a>
+            <a id="add-desc" class="list-group-item" href="#" class="button button-sm" title="Change Description" data-toggle="modal" data-target="#describe" ng-click="updateShow(myshow);">Personalize the Event Description</a>
           </div>
           <!-- Pagination -->
-          <ul class="pager">
-            <li><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; Previous</a></li>
-            <li>{{currentPage+1}}/{{numberOfPages()}}</li>
-            <li><a href="#" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">Next &raquo;</a></li>
-          </ul>
         </div>
       </div>
     </div>
@@ -267,7 +232,7 @@
             <form ng-submit="updateDescription();">
               <div class="form-group">
                 <label for="description">Description</label>
-                <input ng-model="ctrl.formdata" type="text" class="form-control" id="description" placeholder="description"/>
+                <input ng-model="ctrl.formdata" type="text" class="form-control" id="description" placeholder="Add your personalized description here"/>
               </div>
               <button type="submit" class="btn btn-default">Submit</button>
             </form>

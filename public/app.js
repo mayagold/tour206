@@ -114,6 +114,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.updateDescription = function(){
     console.log($scope.updatingShow);
     id = $scope.updatingShow.id;
+    let index = self.myshows.indexOf($scope.updatingShow);
     console.log($scope);
     $http({
       method: 'PUT',
@@ -126,7 +127,11 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       }}
     }).then(response=>{
       console.log(response);
+      self.myshows.splice(index, 1);
+      self.myshows.unshift(response.data);
     }).catch(err=>console.log(err))
+    // replace the old show object in the myshows array with the new one response.data, which has an updated description
+
   }
 
   // GET MY SHOWS

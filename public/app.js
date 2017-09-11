@@ -23,7 +23,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   this.formdata    = {};
   this.users       = [];
   this.user        = {};
-  this.url         = 'http://localhost:3000';
+  this.url         = 'https://tour206backend.herokuapp.com/';
   this.loggedIn    = false;
   this.events      = [];
 

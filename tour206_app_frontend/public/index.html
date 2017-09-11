@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="tour-app">
+
+  <!--  -->
   <!-- Meta content -->
+  <!--  -->
   <head>
     <meta charset="utf-8">
     <!-- Ensure proper rendering and touch zooming -->
@@ -23,7 +26,11 @@
   <body ng-controller="mainController as ctrl" class="">
   <!-- Bootstrap container div  -->
     <div class="container">
-      <!-- Modal -->
+
+      <!--  -->
+      <!-- USER LOGIN AND REGISTER MODALS  -->
+      <!--  -->
+      <!-- Modal: LOGIN -->
       <div id="login" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <!-- Modal: Login -->
@@ -60,7 +67,7 @@
         </div>
       </div>
 
-      <!-- Modal -->
+      <!-- Modal: REG -->
       <div id="register" class="modal fade" role="dialog">
         <div class="modal-dialog">
         <!-- Modal: Reg -->
@@ -97,7 +104,10 @@
         </div>
       </div>
 
-        <!-- Login button -->
+      <!--  -->
+      <!-- USER AUTHENTICATION BUTTONS -->
+      <!--  -->
+      <!-- Login button -->
       <div class="text-right">
         <br/><br/>
         <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"> Log In</a>
@@ -106,41 +116,37 @@
         <!-- logout button -->
         <a href="#" class="btn btn-primary btn-sm text-right" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();">Log Out {{ ctrl.user.username}}</a>
       </div>
+
+      <!--  -->
+      <!-- MAIN CONTENT -->
+      <!--  -->
+      <!-- Page header -->
       <div class="page-header">
         <h1>tour<strong>(206)</strong> <small> // let the <strong>music</strong> find <strong>you</strong></small></h1>
       </div>
 
+      <!-- Filler quote -->
       <blockquote cite="Nietzsche" class="">
         <p>"Without music, [Seattle] life would be a mistake."</p>
       </blockquote>
 
+      <!-- Navigation tabs to click between venues, shows, and user's saved shows -->
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#venues">Venues</a></li>
         <li><a data-toggle="tab" href="#shows">Shows</a></li>
         <li><a data-toggle="tab" href="#myshows">My Plans</a></li>
       </ul>
 
+      <!-- Container div for the three nav tabs: venues, shows, and user's saved shows -->
       <div  class="tab-content">
+
+        <!-- Tab content: Venues Page -->
         <div id="venues" class="tab-pane fade in active">
           <h1>Venues</h1>
-          <input ng-model="q" id="search" placeholder="Search"> </input><span class="glyphicon glyphicon-search"></span>
-          <br/>
-          <ul class="list-group">
-            <li class="list-group-item">First venue</li>
-            <li class="list-group-item">Second venue</li>
-            <li class="list-group-item">Third venue</li>
-          </ul>
-          <ul class="pager">
-            <li><a href="#">&laquo; Previous</a></li>
-            <li><a href="#">Next &raquo;</a></li>
-          </ul>
-        </div>
-
-        <div id="shows" class="tab-pane fade">
-          <h1>Shows</h1>
+          <!-- Filter searchbox -->
           <input ng-model="q" id="search" placeholder="Filter"> </input><span class="glyphicon glyphicon-search"></span>
           <br/><br/>
-
+          <!-- Dropdown: User can choose how many venue entries display on one page -->
           View <select ng-model="pageSize" id="pageSize">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -148,11 +154,41 @@
             <option value="30">30</option>
             <option value="40">40</option>
             <option value="50">50</option>
-          </select> upcoming shows.
+          </select> venues per page.
           <br/><br/>
+          <!-- DATA CONTENT -->
+          <ul class="list-group">
+            <li class="list-group-item">First venue</li>
+            <li class="list-group-item">Second venue</li>
+            <li class="list-group-item">Third venue</li>
+          </ul>
 
+          <ul class="pager">
+            <li><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; Previous</a></li>
+            <li>{{currentPage+1}}/{{numberOfPages()}}</li>
+            <li><a href="#" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">Next &raquo;</a></li>
+          </ul>
+        </div>
+
+
+        <!-- Tab content: Events(shows) page -->
+        <div id="shows" class="tab-pane fade">
+          <h1>Shows</h1>
+          <!-- Filter searchbox -->
+          <input ng-model="q" id="search" placeholder="Filter"> </input><span class="glyphicon glyphicon-search"></span>
+          <br/><br/>
+          <!-- Dropdown: User can choose how many venue entries display on one page -->
+          View <select ng-model="pageSize" id="pageSize">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select> shows per page.
+          <br/><br/>
+          <!-- data content -->
           <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local' | filter: q | startFrom: currentPage*pageSize | limitTo: pageSize" class="list-group">
-
             <p class="list-group-item">
               <a href="#" class="glyphicon glyphicon-music" title="Save to My Shows" ng-click="ctrl.favoriteShow();"></a>
               <strong>{{event.name.text}}</strong>
@@ -164,38 +200,53 @@
               <img src="{{event.logo.url}}" alt="">
             </p>
           </div>
-
+          <!-- Pagination -->
           <ul class="pager">
             <li><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; Previous</a></li>
             <li>{{currentPage+1}}/{{numberOfPages()}}</li>
             <li><a href="#" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">Next &raquo;</a></li>
           </ul>
-          
         </div>
 
+
+        <!-- Tab content: user's saved shows -->
         <div id="myshows" class="tab-pane fade">
           <h1>My Shows</h1>
+          <!-- filter searchbox -->
           <input ng-model="q" id="search" placeholder="Search"> </input><span class="glyphicon glyphicon-search"></span>
           <br/>
-
+          <!-- Dropdown: User can choose how many venue entries display on one page -->
+          View <select ng-model="pageSize" id="pageSize">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select> shows per page.
+          <br/><br/>
+          <!-- data content -->
           <ul class="list-group">
             <li class="list-group-item">First show</li>
             <li class="list-group-item">Second show</li>
             <li class="list-group-item">Third show</li>
           </ul>
+          <!-- Pagination -->
           <ul class="pager">
-            <li><a href="#">&laquo; Previous</a></li>
-            <li><a href="#">Next &raquo;</a></li>
+            <li><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">&laquo; Previous</a></li>
+            <li>{{currentPage+1}}/{{numberOfPages()}}</li>
+            <li><a href="#" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">Next &raquo;</a></li>
           </ul>
         </div>
       </div>
     </div>
 
+    <!-- about the site: link to about modal -->
     <footer class="container">
       <a data-toggle="modal" data-target="#about">About tour(206)</a>
     </footer>
 
-    <!-- Modal -->
+    <!-- Modal ABOUT-->
     <div id="about" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -213,7 +264,7 @@
         </div>
       </div>
     </div>
-
   </body>
-
 </html>
+
+<!-- THAT'S ALL FOLKS -->

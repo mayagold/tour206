@@ -1,12 +1,24 @@
 console.log('hi');
 
+
+
 var app = angular.module('tour-app', []);
 
 app.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
 
-app.controller('mainController', ['$http', function($http){
+app.controller('PaginationController', ['$http', function($http){
+
+}])
+
+app.controller('mainController', ['$http', '$scope', '$filter', function($http, $scope, $filter){
+
+  $scope.currentPage = 0;
+  $scope.pageSize = 10;
+  $scope.data = [];
+  $scope.q = '';
+
   const self       = this;
   this.myshows     = [];
   this.venues      = [];
@@ -16,6 +28,17 @@ app.controller('mainController', ['$http', function($http){
   this.url         = 'http://localhost:3000';
   this.loggedIn    = false;
   this.events      = [];
+
+  // Pagination
+  $scope.getData = function () {
+    return $filter('filter')($scope.data, $scope.q)
+  }
+  $scope.numberOfPages=function(){
+    return Math.ceil($scope.getData().length/$scope.pageSize);
+  }
+  for (var i=0; i<65; i++) {
+    $scope.data.push("Item "+i);
+  }
 
   // GET SHOWS: Calls eventbrite API
   $http({
@@ -98,7 +121,7 @@ app.controller('mainController', ['$http', function($http){
   }
 
   this.favoriteShow = function(){
-    
+
     this.myshows.unshift(response.data)
   }
 
@@ -115,3 +138,12 @@ app.controller('mainController', ['$http', function($http){
   }
 
 }]) // end main controller
+
+
+// Pagination 
+app.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});

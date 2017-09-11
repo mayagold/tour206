@@ -1,38 +1,42 @@
-console.log('hi');
-
-
+// // // // // // // // // // // // // // // // // // //
+// FRONT END JS
+// // // // // // // // // // // // // // // // // // //
 
 var app = angular.module('tour-app', []);
+
+// // // // // // // // // // // // // // // // // // //
+// configuration
+// // // // // // // // // // // // // // // // // // //
 
 app.config(['$qProvider', function ($qProvider) {
     $qProvider.errorOnUnhandledRejections(false);
 }]);
 
-app.controller('PaginationController', ['$http', function($http){
-
-}])
+// // // // // // // // // // // // // // // // // // //
+// MAIN CONTROLLER
+// // // // // // // // // // // // // // // // // // //
 
 app.controller('mainController', ['$http', '$scope', '$filter', function($http, $scope, $filter){
 
-  $scope.currentPage = 0;
-  $scope.pageSize = 10;
-  $scope.data = [];
-  $scope.q = '';
-  $scope.currentEvent = {};
+  // $scope variables
+  $scope.currentPage    = 0;
+  $scope.pageSize       = 10;
+  $scope.data           = [];
+  $scope.q              = '';
+  $scope.currentEvent   = {};
 
-
+  // declare variables
+  this.url         = 'http://localhost:3000';
   const self       = this;
+  this.loggedIn    = false;
+  this.formdata    = {};
+  this.user        = {};
   this.myshows     = [];
   this.venues      = [];
-  this.formdata    = {};
   this.users       = [];
-  this.user        = {};
-  this.url         = 'http://localhost:3000';
-  this.loggedIn    = false;
   this.events      = [];
 
-
-  // Pagination
+  // Pagination functionality
   $scope.getData = function () {
     return $filter('filter')($scope.data, $scope.q)
   }
@@ -42,8 +46,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   for (var i=0; i<65; i++) {
     $scope.data.push("Item "+i);
   }
-
-  // GET SHOWS: Calls eventbrite API
+  // GET EVENTS: Calls eventbrite API
   $http({
     method: 'GET',
     url: self.url + '/events/index'
@@ -54,7 +57,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     console.log(typeof response.data.events[1].start.local);
   })
   .catch(err => console.log(err));
-
   // CREATE: POST request: grabs the show that the user wants to save and create a new Shows model
   $scope.favoriteShow = function(event){
     // console.log($scope);
@@ -84,7 +86,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       // console.log("array ,", self.myshows);
     }).catch(err=>console.log(err))
   }
-
   // GET MY SHOWS
   $http({
     method: 'GET',
@@ -104,8 +105,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   //   this.venues = response.data;
   // }.bind(this));
   //
-
-
 
   // Attach this function to user-authorized content
   // this.getUsers = function(){
@@ -138,12 +137,28 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
     }.bind(this));
-
-    // Still need to implement another ajax request using user id here, after login successful, through which user’s data [favorited shows, saved into backend server] is populated and the My Plans tab data is populated with user's favorited shows
-
+    // the method below finds all of the user's favorite shows by making a get request to the shows model and finding all shows with a user_id identical to the current user's id. then it repopulates the myshows array with that data and renders it on the page. so when a user logs in, their saved favorited shows are automatically loaded in the myshows tab.
+    $http({
+      method: 'GET',
+      url: self.url + '/shows',
+    }).then(function(result){
+      console.log(result.data, " ... trying to call shows");
+      console.log(result.data.length);
+      console.log(result.data[0].user_id);
+      console.log(self.user.id);
+      for (let i=1; i<=result.data.length; i++){
+        console.log("testing result data item #", i);
+        console.log("user id of result data is ", result.data[i].user_id);
+        console.log("user id of user is ", self.user.id);
+        if (result.data[i].user_id === self.user.id){
+          console.log("SAME");
+          self.myshows.unshift(result.data[i]);
+        }
+      }
+      console.log(self.myshows);
+    })
   }
-
-  // Register function:: works
+  // Register function
   this.register = function(userReg){
     $http({
       method: 'POST',
@@ -152,10 +167,9 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     }).then(function(result){
       console.log('Data from server: ', result);
       self.login(userReg);
-      // user should be logged in immediately after sign up!
+      // user is logged in immediately after sign up!
     })
   }
-
   // Log Out function: this works and button only displays when a user is logged in
   this.logout = function(){
     localStorage.clear('token');
@@ -164,28 +178,13 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     console.log(self.currentUser);
     this.myshows = [];
   }
-
-  this.favoriteShow = function(){
-
-    this.myshows.unshift(response.data)
-  }
-
-  this.saveShowsData = function(){
-    console.log('saved to my shows');
-    $http({
-      method: 'POST',
-      url: self.url + '/users/:id',
-      data: this.myshows
-    }).then(function(response){
-      console.log(response);
-      self.user.myshows.unshift(response.data)
-    }).catch(err=>console.log(err));
-  }
-
 }]) // end main controller
 
 
-// Pagination
+// // // // // // // // // // // // // // // // // // //
+// Pagination functionality
+// // // // // // // // // // // // // // // // // // //
+
 app.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int

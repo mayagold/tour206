@@ -19,6 +19,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.data = [];
   $scope.q = '';
 
+
   const self       = this;
   this.myshows     = [];
   this.venues      = [];
@@ -28,6 +29,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   this.url         = 'http://localhost:3000';
   this.loggedIn    = false;
   this.events      = [];
+
 
   // Pagination
   $scope.getData = function () {
@@ -48,8 +50,46 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     console.log('this is the response ', response.data.events)
     this.events = response.data.events
     this.topmatch = response.data.top_match_events
+    console.log(typeof response.data.events[1].start.local);
   })
   .catch(err => console.log(err));
+
+
+
+  // CREATE: POST request: grabs the show that the user wants to save and create a new Shows model
+  $scope.favoriteShow = function(){
+    // THIS IS THE DATA ON THE PAGE WE WANT TO GRAB
+    // show.name
+    console.log(typeof $scope.$$childHead.event.name.text)
+    // show.start
+    console.log(typeof $scope.$$childHead.event.start.local);
+    // show.description
+    console.log(typeof $scope.$$childHead.event.description.text);
+    console.log(typeof self.user.id);
+    // POST REQUEST
+    $http({
+      method: 'POST',
+      url: self.url + '/shows',
+      data: {show: {
+        name: $scope.$$childHead.event.name.text,
+        start: $scope.$$childHead.event.start.local,
+        description: $scope.$$childHead.event.description.text,
+        user_id: self.user.id
+      }},
+    }).then(response=>{
+      console.log(response);
+    }).catch(err=>console.log(err))
+  }
+
+  // GET MY SHOWS
+  $http({
+    method: 'GET',
+    url: self.url + '/shows'
+  }).then(response => {
+    console.log('this is the response ', response)
+  })
+  .catch(err => console.log(err));
+
   //
   // // GET VENUES DATA
   // $http({
@@ -62,7 +102,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   //
 
 
-  //
+
   // Attach this function to user-authorized content
   // this.getUsers = function(){
   //   $http({
@@ -99,7 +139,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 
   }
 
-  // Register function:: This does not work: function responds "status code 422 Unprocessable Entity"
+  // Register function:: works
   this.register = function(userReg){
     $http({
       method: 'POST',
@@ -140,7 +180,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 }]) // end main controller
 
 
-// Pagination 
+// Pagination
 app.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int

@@ -188,9 +188,9 @@
           </select> shows per page.
           <br/><br/>
           <!-- data content -->
-          <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local' | filter: q | startFrom: currentPage*pageSize | limitTo: pageSize" class="list-group">
+          <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local' | filter: q | startFrom: currentPage*pageSize | limitTo: pageSize" class="list-group" ng-model="currentEvent">
             <p class="list-group-item">
-              <a href="#" class="glyphicon glyphicon-music" title="Save to My Shows" ng-click="ctrl.favoriteShow();"></a>
+              <a href="#" class="glyphicon glyphicon-music" title="Save to My Shows" ng-click="favoriteShow();"></a>
               <strong>{{event.name.text}}</strong>
             </p>
             <p class="list-group-item">{{event.start.local | date:'MM/dd/yyyy @ h:mma'}}</p>

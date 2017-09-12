@@ -28,7 +28,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.updatingShow   = {};
 
   // declare variables
-  this.url         = 'https://tour206backend.herokuapp.com';
+  this.url         = 'http://localhost:3000';
   const self       = this;
   this.loggedIn    = false;
   this.formdata    = '';
@@ -36,7 +36,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   this.myshows     = [];
   this.venues      = [];
   this.users       = [];
-  this.user        = {};
   this.loggedIn    = false;
   this.events      = [];
 

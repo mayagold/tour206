@@ -24,6 +24,18 @@
   </head>
   <!-- Body content -->
   <body ng-controller="mainController as ctrl" class="">
+    <nav class="navbar navbar-default">
+
+      <div class="text-right">
+        <br/><br/>
+        <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"> Log In</a>
+        <!-- Register Button -->
+        <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"> Register</a>
+        <!-- logout button -->
+        <a href="#" class="btn btn-primary btn-sm text-right" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();">Log Out {{ ctrl.user.username}}</a>
+      </div>
+    </nav>
+
   <!-- Bootstrap container div  -->
     <div class="container">
 
@@ -108,27 +120,17 @@
       <!-- USER AUTHENTICATION BUTTONS -->
       <!--  -->
       <!-- Login button -->
-      <div class="text-right">
-        <br/><br/>
-        <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"> Log In</a>
-        <!-- Register Button -->
-        <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"> Register</a>
-        <!-- logout button -->
-        <a href="#" class="btn btn-primary btn-sm text-right" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();">Log Out {{ ctrl.user.username}}</a>
-      </div>
+
 
       <!--  -->
       <!-- MAIN CONTENT -->
       <!--  -->
       <!-- Page header -->
       <div class="page-header">
-        <h1>tour<strong>(206)</strong> <small> // let the <strong>music</strong> find <strong>you</strong></small></h1>
+        <h1>tour(206) <small> <br/>// let the music find <strong>you</strong></small></h1>
       </div>
 
-      <!-- Filler quote -->
-      <blockquote cite="Nietzsche" class="">
-        <p>"Without music, [Seattle] would be a mistake."</p>
-      </blockquote>
+
 
       <!-- Navigation tabs to click between venues, shows, and user's saved shows -->
       <ul class="nav nav-tabs">
@@ -256,6 +258,12 @@
           <div class="modal-body">
             <p>Created by Maya Goldstein and David Gardner for General Assembly WDIr-Gizmo, Sept 2017</p>
           </div>
+
+          <!-- Filler quote -->
+          <blockquote cite="Nietzsche" class="">
+            <p>"Without music, [Seattle] would be a mistake."</p>
+          </blockquote>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>

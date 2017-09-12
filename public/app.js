@@ -180,7 +180,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-      // console.log(response.data);
+      console.log(response.data);
       self.loggedIn = true;
       self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));

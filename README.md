@@ -1,9 +1,26 @@
 # Tour(206)
 ##### A Ruby on Rails / Angular App
 
-Two-model application built with Ruby on Rails for the backend API and a frontend framework built with AngularJs.
 
 Tour(206) is an easy way to find concerts happening in Seattle. Discover all the information you need to experience the best live music and venues in the city.
+
+---
+
+### MVP
+
+* Rails server with full CRUD operations and a JSON API
+* Angular front end app
+* CORS configuration
+* One-to-many relationship between user and favorite shows
+* Trello
+
+---
+
+### Extra Features
+
+* Third party API (Eventbrite) using httparty gem
+* JavaScript Web Token authentication
+* CSS Framework (Bootstrap)
 
 ---
 
@@ -13,7 +30,6 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 * Angular
 * Ruby on Rails
 * CSS Bootstrap
-* Third Party API (Eventbrite)
 * JWT
 * Heroku
 
@@ -33,16 +49,6 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 1. Admin can view concerts happening in Seattle.
 2. Admin can create, update, and delete data for both venues and concerts.
 3. Admin is required to sign in with password authentication in order to access the admin app.
-
----
-
-### MVP
-
-* Rails server with full CRUD operations and a JSON API
-* Angular front end app
-* CORS configuration
-* One-to-many relationship between user and favorite shows
-* Trello
 
 ---
 

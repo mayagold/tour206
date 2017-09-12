@@ -28,7 +28,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.updatingShow   = {};
 
   // declare variables
-  this.url         = 'https://tour206.herokuapp.com';
+  this.url         = 'https://tour206backend.herokuapp.com';
   const self       = this;
   this.loggedIn    = false;
   this.formdata    = '';
@@ -36,6 +36,8 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   this.myshows     = [];
   this.venues      = [];
   this.users       = [];
+  this.user        = {};
+  this.loggedIn    = false;
   this.events      = [];
 
 
@@ -62,17 +64,17 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   .catch(err => console.log(err));
   // CREATE: POST request: grabs the show that the user wants to save and create a new Shows model
   $scope.favoriteShow = function(event){
-    // console.log($scope);
-    // console.log(event);
+    console.log($scope);
+    console.log(event);
     $scope.currentEvent = event;
     // THIS IS THE DATA ON THE PAGE WE WANT TO GRAB
     // show.name
-    // console.log($scope.currentEvent.name.text);
-    // // show.start
-    // console.log( $scope.currentEvent.start.local);
-    // // show.description
-    // console.log( $scope.currentEvent.description.text);
-    // console.log(typeof self.user.id);
+    console.log($scope.currentEvent.name.text);
+    // show.start
+    console.log( $scope.currentEvent.start.local);
+    // show.description
+    console.log( $scope.currentEvent.description.text);
+    console.log(typeof self.user.id);
     // POST REQUEST
     $http({
       method: 'POST',
@@ -84,7 +86,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
         user_id: self.user.id
       }},
     }).then(response=>{
-      // console.log(response.data);
+      console.log(response.data);
       self.myshows.unshift(response.data);
       // console.log("array ,", self.myshows);
     }).catch(err=>console.log(err))
@@ -181,6 +183,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
+
       console.log(response.data);
       self.loggedIn = true;
       self.user = response.data.user;
@@ -216,6 +219,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       data: { user: { username: userReg.username, email: userReg.email, password: userReg.password }},
     }).then(function(result){
       console.log('Data from server: ', result);
+      // self.user = result.data;
       self.login(userReg);
       // user is logged in immediately after sign up!
     })
@@ -231,9 +235,11 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 }]) // end main controller
 
 
+
 // // // // // // // // // // // // // // // // // // //
 // Pagination functionality
 // // // // // // // // // // // // // // // // // // //
+
 app.filter('startFrom', function() {
     return function(input, start) {
         start = +start; //parse to int

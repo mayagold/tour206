@@ -63,17 +63,17 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   .catch(err => console.log(err));
   // CREATE: POST request: grabs the show that the user wants to save and create a new Shows model
   $scope.favoriteShow = function(event){
-    // console.log($scope);
-    // console.log(event);
+    console.log($scope);
+    console.log(event);
     $scope.currentEvent = event;
     // THIS IS THE DATA ON THE PAGE WE WANT TO GRAB
     // show.name
-    // console.log($scope.currentEvent.name.text);
-    // // show.start
-    // console.log( $scope.currentEvent.start.local);
-    // // show.description
-    // console.log( $scope.currentEvent.description.text);
-    // console.log(typeof self.user.id);
+    console.log($scope.currentEvent.name.text);
+    // show.start
+    console.log( $scope.currentEvent.start.local);
+    // show.description
+    console.log( $scope.currentEvent.description.text);
+    console.log(typeof self.user.id);
     // POST REQUEST
     $http({
       method: 'POST',
@@ -85,7 +85,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
         user_id: self.user.id
       }},
     }).then(response=>{
-      // console.log(response.data);
+      console.log(response.data);
       self.myshows.unshift(response.data);
       // console.log("array ,", self.myshows);
     }).catch(err=>console.log(err))

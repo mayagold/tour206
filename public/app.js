@@ -182,10 +182,10 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-
       console.log(response.data);
       self.loggedIn = true;
       self.user = response.data.user;
+      console.log(self.user, "this is the self.user object");
       localStorage.setItem('token', JSON.stringify(response.data.token));
       console.log(localStorage.token, " This is the token or at least it should be");
     }.bind(this));

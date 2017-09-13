@@ -38,12 +38,12 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 
 ### User Stories
 
-1. User can view concerts happening in Seattle by date (calendar).
-2. User can view concerts happening in Seattle by venue.
+1. User can view concerts happening in Seattle by date (calendar list view).
 3. User can add/delete concerts to/from a list of favorites (attending).
-4. User can access data about the concert including time, link to tickets, etc.
-5. Concert data will be accessed through Ticketfly (Eventbrite, LiveNation, etc) API.
-6. Single page app with two tabs (calendar view and list view, both organized by date).
+4. User can access data about the concert and search concerts using a keyword (artist name, genre of music, etc).
+5. User views content accessed directly through a 3rd party API (Eventbrite) that updates in real time.
+6. User can navigate between different nav tab views (shows, venues, favorited shows) without the page reloading.
+7. User's data saves and can be accessed every time user logs in. 
 
 ---
 

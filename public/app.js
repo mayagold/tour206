@@ -163,8 +163,8 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/shows',
     }).then(function(result){
       console.log(typeof result.data, " ... trying to call shows");
-      self.allshows.unshift(result.data);
-      console.log(self.allshows);
+      self.allshows = result.data;
+      console.log(typeof self.allshows);
       console.log(self.allshows.length);
       console.log(self.allshows[0].user_id);
       console.log(self.user.id, " **** this is self.user");

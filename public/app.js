@@ -197,14 +197,15 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(result.data, " ... trying to call shows");
       console.log(result.data.length);
       console.log(result.data[0].user_id);
-      console.log(self.user.id);
+      console.log(self.user.id, " **** this is self.user");
       for (let i=1; i<=result.data.length; i++){
-        console.log("testing result data item #", i)
-        console.log("user id of result data is ", result.data[i].user_id)
-        console.log("user id of user is ", self.user.id)
+        console.log("testing result data item # RESPONSE user id of result data AND userid of user", i, result.data[i].user_id, self.user.id);
         if (result.data[i].user_id === self.user.id){
           console.log("SAME");
           self.myshows.unshift(result.data[i]);
+        }
+        else {
+          console.log("nada, next");
         }
       }
       console.log(self.myshows);

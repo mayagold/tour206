@@ -45,28 +45,14 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 5. Concert data will be accessed through Ticketfly (Eventbrite, LiveNation, etc) API.
 6. Single page app with two tabs (calendar view and list view, both organized by date).
 
-(Admin User Stories: Stretch goals)
-
-1. Admin can view concerts happening in Seattle.
-2. Admin can create, update, and delete data for both venues and concerts.
-3. Admin is required to sign in with password authentication in order to access the admin app.
-
 ---
 
 ### Process
 
 1. Wireframes
-
-(image)
-
 1. Trello board: https://trello.com/b/2uQkYc1t/tour206
-
-![Trello Board Screenshot](trello.png)
-
 1. Initial page styling and layout
-
 1. Eventbrite API Call
-
 1. Full CRUD
 
 ---

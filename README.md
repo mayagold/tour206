@@ -1,6 +1,7 @@
 # Tour(206)
 ##### A Ruby on Rails / Angular App
 
+![App Screenshot](public/Tour206_Screenshot.png)
 
 Tour(206) is an easy way to find concerts happening in Seattle. Discover all the information you need to experience the best live music and venues in the city.
 
@@ -70,8 +71,12 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 
 ---
 
-### Bugs and Unsolved Problems
+### ![Bugs and Unsolved Problems](https://www.youtube.com/watch?v=m4wK0lo0xps)
+
+![My Shows Screenshot](public/myshows-screenshot.png)
 
 0. Pagination lets you scroll thru negative pages... wtf...
-0. User post not working in heroku (might fix itself when we push to heroku master again)
-0. Expand/collapse doesn't have a toggle yet
+0. Expand/collapse doesn't have a toggle yet.
+0. We have yet to add Venues. Definitely want to do that.
+0. Also want to continue pulling from multiple third party APIs to get data from all the area ticket providers, not just Eventbrite.
+0. Should add an image URL to the My Shows page.

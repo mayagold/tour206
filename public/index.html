@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="tour-app">
-
   <!--  -->
   <!-- Meta content -->
   <!--  -->
@@ -8,7 +7,10 @@
     <meta charset="utf-8">
     <!-- Ensure proper rendering and touch zooming -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS file -->
     <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/x-icon"/>
     <!-- Bootstrap: Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- jQuery library -->
@@ -24,8 +26,29 @@
   </head>
   <!-- Body content -->
   <body ng-controller="mainController as ctrl" class="">
+
+    <div id="header">
+      <div class="container">
+        <!--  -->
+        <!-- USER AUTHENTICATION BUTTONS -->
+        <!--  -->
+        <!-- Login button -->
+        <div class="text-right">
+          <br/>
+          <a href="#" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"><code>Log In</code></a>
+          <!-- Register Button -->
+          <a href="#" data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"><code>Register</code></a>
+          <!-- logout button -->
+          <a href="#" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();"><code>Log Out {{ ctrl.user.username}}</code></a>
+        </div>
+      </div>
+    </div>
+
+
+
   <!-- Bootstrap container div  -->
     <div class="container">
+
 
       <!--  -->
       <!-- USER LOGIN AND REGISTER MODALS  -->
@@ -103,46 +126,28 @@
           </div>
         </div>
       </div>
-
-      <!--  -->
-      <!-- USER AUTHENTICATION BUTTONS -->
-      <!--  -->
-      <!-- Login button -->
-      <div class="text-right">
-        <br/><br/>
-        <a href="#" class="btn btn-primary btn-sm text-right" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"> Log In</a>
-        <!-- Register Button -->
-        <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"> Register</a>
-        <!-- logout button -->
-        <a href="#" class="btn btn-primary btn-sm text-right" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();">Log Out {{ ctrl.user.username}}</a>
-      </div>
-
       <!--  -->
       <!-- MAIN CONTENT -->
       <!--  -->
       <!-- Page header -->
       <div class="page-header">
-        <h1>tour<strong>(206)</strong> <small> // let the <strong>music</strong> find <strong>you</strong></small></h1>
+        <h1><code>tour(206)</code><small><code class="comment"><br/> let the music find you</code></small></h1>
       </div>
-
-      <!-- Filler quote -->
-      <blockquote cite="Nietzsche" class="">
-        <p>"Without music, [Seattle] would be a mistake."</p>
-      </blockquote>
 
       <!-- Navigation tabs to click between venues, shows, and user's saved shows -->
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#venues">Venues</a></li>
-        <li><a data-toggle="tab" href="#shows">Shows</a></li>
-        <li><a data-toggle="tab" href="#myshows">My Plans</a></li>
+        <li class="active"><a data-toggle="tab" href="#shows">206 Shows</a></li>
+        <li><a data-toggle="tab" href="#venues">206 Venues</a></li>
+        <li><a data-toggle="tab" href="#myshows">My Shows <span class="glyphicon glyphicon-music"></span></a></li>
       </ul>
 
       <!-- Container div for the three nav tabs: venues, shows, and user's saved shows -->
       <div  class="tab-content">
 
         <!-- Tab content: Venues Page -->
-        <div id="venues" class="tab-pane fade in active">
+        <div id="venues" class="tab-pane fade">
           <h1>Venues</h1>
+          <h3>Coming Soon </h3>
           <!-- DATA CONTENT -->
           <ul class="list-group">
             <li class="list-group-item">First venue</li>
@@ -154,20 +159,20 @@
 
 
         <!-- Tab content: Events(shows) page -->
-        <div id="shows" class="tab-pane fade">
+        <div id="shows" class="tab-pane fade in active">
           <h1>Shows</h1>
           <!-- Filter searchbox -->
-          <input ng-model="q" id="search" placeholder="Filter"> </input><span class="glyphicon glyphicon-search"></span>
+          <input ng-model="q" id="search" placeholder="Filter by: Keyword"> </input><span class="glyphicon glyphicon-search"></span>
           <br/><br/>
           <!-- Dropdown: User can choose how many venue entries display on one page -->
-          View <select ng-model="pageSize" id="pageSize">
+          View: <select ng-model="pageSize" id="pageSize">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="30">30</option>
             <option value="40">40</option>
             <option value="50">50</option>
-          </select> shows per page.
+          </select>
           <br/><br/>
           <!-- data content -->
           <div class="list-group" ng-repeat="event in ctrl.events | orderBy:'start.local' | filter: q | startFrom: currentPage*pageSize | limitTo: pageSize" class="list-group" >
@@ -178,7 +183,7 @@
             <p class="list-group-item">{{event.start.local | date:'MM/dd/yyyy @ h:mma'}}</p>
             <p class="list-group-item" id="event-description" ng-init="limit=200">
               {{event.description.text | limitTo: limit }}
-              <code ng-click="limit=Number.MAX_SAFE_INTEGER"> expand/collapse </code><br/>
+              <a ng-click="limit=Number.MAX_SAFE_INTEGER" class="glyphicon glyphicon-plus"></a><br/>
               <img class="thumbnail" src="{{event.logo.url}}" alt="">
             </p>
           </div>
@@ -194,20 +199,22 @@
         <!-- Tab content: user's saved shows -->
         <div id="myshows" class="tab-pane fade">
           <h1>My Shows</h1>
-          <h3 ng-hide="ctrl.loggedIn==true">Please log in to view your saved events.</h3>
+          <h6 ng-hide="ctrl.loggedIn==true">Please log in to view your saved events.</h6>
           <!-- data content -->
           <div class="list-group" ng-repeat="myshow in ctrl.myshows" >
             <p class="list-group-item">
               <a href="#" class="glyphicon glyphicon-music"></a>
               <strong>{{myshow.name}}</strong>
-              <a href="#" class="button button-sm" title="Unfavorite" ng-click="unfavoriteShow(myshow);">Unfollow This Event</a>
             </p>
             <p class="list-group-item">{{myshow.start | date:'MM/dd/yyyy @ h:mma'}}</p>
             <p class="list-group-item" id="myshow-description" ng-init="limit=200">
               {{myshow.description | limitTo: limit }}
-              <code ng-click="limit=Number.MAX_SAFE_INTEGER"> expand/collapse </code><br/>
+              <a class="class="glyphicon glyphicon-plus"" ng-click="limit=Number.MAX_SAFE_INTEGER"></a><br/>
             </p>
-            <a id="add-desc" class="list-group-item" href="#" class="button button-sm" title="Change Description" data-toggle="modal" data-target="#describe" ng-click="updateShow(myshow);">Personalize the Event Description</a>
+            <div class="list-group-item">
+              <a href="#" class="glyphicon glyphicon-trash" title="Unfavorite" ng-click="unfavoriteShow(myshow);"></a>
+              <a id="add-desc" href="#" class="glyphicon glyphicon-edit" title="Change Description" data-toggle="modal" data-target="#describe" ng-click="updateShow(myshow);"></a>
+            </div>
           </div>
           <!-- Pagination -->
         </div>
@@ -215,9 +222,14 @@
     </div>
 
     <!-- about the site: link to about modal -->
-    <footer class="container">
-      <a data-toggle="modal" data-target="#about">About tour(206)</a>
-    </footer>
+
+    <div id="footer">
+      <div class="container">
+        <br/>
+        <a data-toggle="modal" data-target="#about"><code>About tour(206)</code></a>
+        <br/>
+      </div>
+    </div>
 
     <!-- Modal Edit description -->
     <div id="describe" class="modal fade" role="dialog">
@@ -254,7 +266,11 @@
             <h4 class="modal-title">tour(206)</h4>
           </div>
           <div class="modal-body">
-            <p>Created by Maya Goldstein and David Gardner for General Assembly WDIr-Gizmo, Sept 2017</p>
+            <!-- Filler quote -->
+            <blockquote cite="Nietzsche" class="">
+              <p>"Without music, [Seattle] would be a mistake."</p>
+            </blockquote>
+            <p>&copy; Maya Goldstein and David Gardner<br/>General Assembly WDIr-Gizmo 2017</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

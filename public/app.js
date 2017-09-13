@@ -28,8 +28,10 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   $scope.updatingShow   = {};
 
   // declare variables
-  this.url         = 'https://tour206backend.herokuapp.com';
+  this.url = 'http://localhost:3000';
+
   let self         = this;
+
   this.loggedIn    = false;
   this.formdata    = '';
   this.user        = {};
@@ -38,7 +40,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   this.users       = [];
   this.loggedIn    = false;
   this.events      = [];
-
 
   // Pagination functionality
   $scope.getData = function () {
@@ -55,25 +56,13 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     method: 'GET',
     url: self.url + '/events/index'
   }).then(response => {
-    console.log('this is the response ', response.data.events)
     this.events = response.data.events
     this.topmatch = response.data.top_match_events
-    console.log(typeof response.data.events[1].start.local);
   })
   .catch(err => console.log(err));
   // CREATE: POST request: grabs the show that the user wants to save and create a new Shows model
   $scope.favoriteShow = function(event){
-    console.log($scope);
-    console.log(event);
     $scope.currentEvent = event;
-    // THIS IS THE DATA ON THE PAGE WE WANT TO GRAB
-    // show.name
-    console.log($scope.currentEvent.name.text);
-    // show.start
-    console.log( $scope.currentEvent.start.local);
-    // show.description
-    console.log( $scope.currentEvent.description.text);
-    console.log("user id ", self.user.id);
     // POST REQUEST
     $http({
       method: 'POST',
@@ -85,39 +74,30 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
         user_id: self.user.id
       }},
     }).then(response=>{
-      console.log(response.data);
       self.myshows.unshift(response.data);
-      // console.log("array ,", self.myshows);
     }).catch(err=>console.log(err))
   }
 
   // DELETE ROUTE
   $scope.unfavoriteShow = function(myshow){
     $scope.currentShow = myshow;
-    // console.log($scope.currentShow);
     let id = $scope.currentShow.id;
     let index = self.myshows.indexOf($scope.currentShow);
-    // console.log(id);
     $http({
       method: 'DELETE',
       url: self.url + '/shows/' + id,
     }).then(response=>{
-      // console.log(response);
-      // console.log('delete route');
       self.myshows.splice(index, 1);
     }).catch(err=>console.log(err))
   }
 
   $scope.updateShow = function(myshow){
     $scope.updatingShow = myshow;
-    console.log($scope.updatingShow);
   }
 
   $scope.updateDescription = function(){
-    console.log($scope.updatingShow);
     id = $scope.updatingShow.id;
     let index = self.myshows.indexOf($scope.updatingShow);
-    console.log($scope);
     $http({
       method: 'PUT',
       url: self.url + '/shows/' + id,
@@ -128,12 +108,10 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
         user_id: $scope.updatingShow.user_id,
       }}
     }).then(response=>{
-      console.log(response);
       self.myshows.splice(index, 1);
       self.myshows.unshift(response.data);
     }).catch(err=>console.log(err))
     // replace the old show object in the myshows array with the new one response.data, which has an updated description
-
   }
 
   // GET MY SHOWS
@@ -141,11 +119,9 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     method: 'GET',
     url: self.url + '/shows'
   }).then(response => {
-    // console.log('this is the response ', response)
   })
   .catch(err => console.log(err));
 
-  //
   // // GET VENUES DATA
   // $http({
   //   method: 'GET',
@@ -154,63 +130,32 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   //   console.log(response);
   //   this.venues = response.data;
   // }.bind(this));
-  //
-
-  // Attach this function to user-authorized content
-  // this.getUsers = function(){
-  //   $http({
-  //     url: this.url + '/users',
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
-  //     }
-  //   }).then(function(response){
-  //     if (response.data.status==401){
-  //       this.error = "UNAUTHORIZED";
-  //     } else {
-  //       this.users = response.data;
-  //     }
-  //   }.bind(this));
-  // }
-  // this.getUsers();
 
   // Log In Function
   this.login = function(userPass){
-    // console.log('User Entered Info: ', userPass);
     $http({
       method: 'POST',
       url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-      console.log(response.data);
       self.loggedIn = true;
       self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
-      console.log(localStorage.token, " This is the token or at least it should be");
       self.getShows();
     }.bind(this));
-    // the method below finds all of the user's favorite shows by making a get request to the shows model and finding all shows with a user_id identical to the current user's id. then it repopulates the myshows array with that data and renders it on the page. so when a user logs in, their saved favorited shows are automatically loaded in the myshows tab.
   }
 
   this.getShows = function(){
+        // the method below finds all of the user's favorite shows by making a get request to the shows model and finding all shows with a user_id identical to the current user's id. then it repopulates the myshows array with that data and renders it on the page. so when a user logs in, their saved favorited shows are automatically loaded in the myshows tab.
     $http({
       method: 'GET',
       url: self.url + '/shows',
     }).then(function(result){
-      console.log(result.data, " ... trying to call shows");
-      console.log(result.data.length);
-      console.log(result.data[0].user_id);
-      console.log(self.user.id);
       for (var i=0; i<result.data.length; i++){
-        // console.log("testing result data item #", i);
-        // console.log("user id of result data is ", result.data[i].user_id);
-        // console.log("user id of user is ", self.user.id);
         if (result.data[i].user_id == self.user.id){
-          console.log("SAME");
           self.myshows.unshift(result.data[i]);
         }
       }
-      console.log(self.myshows);
     })
   }
 
@@ -221,8 +166,6 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/users/',
       data: { user: { username: userReg.username, email: userReg.email, password: userReg.password }},
     }).then(function(result){
-      console.log('Data from server: ', result);
-      // self.user = result.data;
       self.login(userReg);
       // user is logged in immediately after sign up!
     })
@@ -232,11 +175,9 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     localStorage.clear('token');
     location.reload();
     self.loggedIn = false;
-    console.log(self.currentUser);
     this.myshows = [];
   }
 }]) // end main controller
-
 
 
 // // // // // // // // // // // // // // // // // // //

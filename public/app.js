@@ -188,11 +188,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(self.user, "this is the self.user object");
       localStorage.setItem('token', JSON.stringify(response.data.token));
       console.log(localStorage.token, " This is the token or at least it should be");
-      self.getShows();
     }.bind(this));
-  }
-
-  this.getShows = function(){
     $http({
       method: 'GET',
       url: self.url + '/shows',
@@ -207,6 +203,10 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(self.myshows);
     }.bind(this))
   }
+
+
+
+
 
   this.searchShows = function() {
     for (let i=1; i<=allshows.length; i++){

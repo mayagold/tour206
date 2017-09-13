@@ -29,16 +29,16 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 
   // declare variables
   this.url         = 'https://tour206backend.herokuapp.com';
-  let self         = this;
+  var self         = this;
   this.loggedIn    = false;
   this.formdata    = '';
-  self.user        = {};
   this.myshows     = [];
   this.venues      = [];
   this.users       = [];
   this.loggedIn    = false;
   this.events      = [];
-  self.allshows    = [];
+  this.allshows    = [];
+  this.user        = {};
 
   // Pagination functionality
   $scope.getData = function () {
@@ -141,42 +141,11 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     method: 'GET',
     url: self.url + '/shows'
   }).then(response => {
-    // console.log('this is the response ', response)
   })
   .catch(err => console.log(err));
 
-  //
-  // // GET VENUES DATA
-  // $http({
-  //   method: 'GET',
-  //   url: 'http://localhost:3000/venues',
-  // }).then(function(response){
-  //   console.log(response);
-  //   this.venues = response.data;
-  // }.bind(this));
-  //
-
-  // Attach this function to user-authorized content
-  // this.getUsers = function(){
-  //   $http({
-  //     url: this.url + '/users',
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('token'))
-  //     }
-  //   }).then(function(response){
-  //     if (response.data.status==401){
-  //       this.error = "UNAUTHORIZED";
-  //     } else {
-  //       this.users = response.data;
-  //     }
-  //   }.bind(this));
-  // }
-  // this.getUsers();
-
   // Log In Function
   this.login = function(userPass){
-    // console.log('User Entered Info: ', userPass);
     $http({
       method: 'POST',
       url: self.url + '/users/login',
@@ -194,10 +163,10 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/shows',
     }).then(function(result){
       console.log(typeof result.data, " ... trying to call shows");
-      self.allshows.push(result.data);
-      console.log(allshows);
-      console.log(result.data.length);
-      console.log(result.data[0].user_id);
+      self.allshows.unshift(result.data);
+      console.log(self.allshows);
+      console.log(self.allshows.length);
+      console.log(self.allshows[0].user_id);
       console.log(self.user.id, " **** this is self.user");
       self.searchShows();
       console.log(self.myshows);
@@ -209,9 +178,9 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 
 
   this.searchShows = function() {
-    for (let i=1; i<=allshows.length; i++){
-      console.log("testing result data item # RESPONSE user id of result data AND userid of user", i, allshows[i].user_id, self.user.id);
-      if (allshows[i].user_id === self.user.id){
+    for (let i=1; i<=self.allshows.length; i++){
+      console.log("testing result data item # RESPONSE user id of result data AND userid of user", i, self.allshows[i].user_id, self.user.id);
+      if (self.allshows[i].user_id === self.user.id){
         console.log("SAME");
         self.myshows.unshift(result.data[i]);
       }

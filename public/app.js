@@ -157,20 +157,20 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(self.user, "this is the self.user object");
       localStorage.setItem('token', JSON.stringify(response.data.token));
       console.log(localStorage.token, " This is the token or at least it should be");
+      $http({
+        method: 'GET',
+        url: self.url + '/shows',
+      }).then(function(result){
+        console.log(typeof result.data, " ... trying to call shows");
+        self.allshows.push(result.data);
+        console.log(typeof self.allshows);
+        console.log(self.allshows.length);
+        console.log(self.allshows[0].user_id);
+        console.log(self.user.id, " **** this is self.user");
+        self.searchShows();
+        console.log(self.myshows);
+      }.bind(this))
     }.bind(this));
-    $http({
-      method: 'GET',
-      url: self.url + '/shows',
-    }).then(function(result){
-      console.log(typeof result.data, " ... trying to call shows");
-      self.allshows = result.data;
-      console.log(typeof self.allshows);
-      console.log(self.allshows.length);
-      console.log(self.allshows[0].user_id);
-      console.log(self.user.id, " **** this is self.user");
-      self.searchShows();
-      console.log(self.myshows);
-    }.bind(this))
   }
 
 

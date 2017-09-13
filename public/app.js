@@ -205,7 +205,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(self.user.id, " **** this is self.user");
       self.searchShows();
       console.log(self.myshows);
-    })
+    }.bind(this))
   }
 
   this.searchShows = function() {

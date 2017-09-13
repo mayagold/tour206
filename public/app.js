@@ -38,7 +38,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   this.users       = [];
   this.loggedIn    = false;
   this.events      = [];
-
+  self.allshows    = [];
 
   // Pagination functionality
   $scope.getData = function () {
@@ -184,10 +184,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
     }).then(function(response){
       console.log(response.data);
       self.loggedIn = true;
-      self.user.id = response.data.user.id;
-      self.user.username = response.data.user.username;
-      self.user.email = response.data.user.email;
-      self.user.password_digest = response.data.password_digest;
+      self.user = response.data.user;
       console.log(self.user, "this is the self.user object");
       localStorage.setItem('token', JSON.stringify(response.data.token));
       console.log(localStorage.token, " This is the token or at least it should be");
@@ -201,21 +198,27 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/shows',
     }).then(function(result){
       console.log(result.data, " ... trying to call shows");
+      self.allshows = result.data;
+      console.log(allshows);
       console.log(result.data.length);
       console.log(result.data[0].user_id);
       console.log(self.user.id, " **** this is self.user");
-      for (let i=1; i<=result.data.length; i++){
-        console.log("testing result data item # RESPONSE user id of result data AND userid of user", i, result.data[i].user_id, self.user.id);
-        if (result.data[i].user_id === self.user.id){
-          console.log("SAME");
-          self.myshows.unshift(result.data[i]);
-        }
-        else {
-          console.log("nada, next");
-        }
-      }
+      self.searchShows();
       console.log(self.myshows);
     })
+  }
+
+  this.searchShows = function() {
+    for (let i=1; i<=allshows.length; i++){
+      console.log("testing result data item # RESPONSE user id of result data AND userid of user", i, allshows[i].user_id, self.user.id);
+      if (allshows[i].user_id === self.user.id){
+        console.log("SAME");
+        self.myshows.unshift(result.data[i]);
+      }
+      else {
+        console.log("nada, next");
+      }
+    }
   }
 
 

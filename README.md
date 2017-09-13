@@ -55,19 +55,19 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 
 ### Process
 
-0. Wireframes
+1. Wireframes
 
 (image)
 
-0. Trello board: https://trello.com/b/2uQkYc1t/tour206
+1. Trello board: https://trello.com/b/2uQkYc1t/tour206
 
 ![Trello Board Screenshot](trello.png)
 
-0. Initial page styling and layout
+1. Initial page styling and layout
 
-0. Eventbrite API Call
+1. Eventbrite API Call
 
-0. Full CRUD
+1. Full CRUD
 
 ---
 
@@ -75,8 +75,8 @@ Tour(206) is an easy way to find concerts happening in Seattle. Discover all the
 
 ![My Shows Screenshot](public/myshows-screenshot.png)
 
-0. Pagination lets you scroll thru negative pages... wtf...
-0. Expand/collapse doesn't have a toggle yet.
-0. We have yet to add Venues. Definitely want to do that.
-0. Also want to continue pulling from multiple third party APIs to get data from all the area ticket providers, not just Eventbrite.
-0. Should add an image URL to the My Shows page.
+1. Pagination lets you scroll thru negative pages... wtf...
+1. Expand/collapse doesn't have a toggle yet.
+1. We have yet to add Venues. Definitely want to do that.
+1. Also want to continue pulling from multiple third party APIs to get data from all the area ticket providers, not just Eventbrite.
+1. Should add an image URL to the My Shows page.

@@ -68,4 +68,9 @@ html {
 
   a:hover {
     color: steelblue !important;
+    text-decoration: none !important
+  }
+
+  .nav-element:hover {
+    font-weight: bold !important;
   }

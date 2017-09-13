@@ -35,11 +35,11 @@
         <!-- Login button -->
         <div class="text-right">
           <br/>
-          <a href="#" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"><code>Log In</code></a>
+          <a class="nav-element" href="#" data-toggle="modal" data-target="#login" ng-show="ctrl.loggedIn==false"><code>Log In</code></a>
           <!-- Register Button -->
-          <a href="#" data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"><code>Register</code></a>
+          <a href="#" class="nav-element"  data-toggle="modal" data-target="#register" ng-show="ctrl.loggedIn==false"><code>Register</code></a>
           <!-- logout button -->
-          <a href="#" ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();"><code>Log Out {{ ctrl.user.username}}</code></a>
+          <a href="#" class="nav-element"  ng-show="ctrl.loggedIn==true" ng-click="ctrl.logout();"><code>Log Out {{ ctrl.user.username}}</code></a>
         </div>
       </div>
     </div>
@@ -162,7 +162,7 @@
         <div id="shows" class="tab-pane fade in active">
           <h1>Shows</h1>
           <!-- Filter searchbox -->
-          <input ng-model="q" id="search" placeholder="Filter by: Keyword"> </input><span class="glyphicon glyphicon-search"></span>
+          <input ng-model="q" id="search" placeholder="Filter by: Keyword"> </input>   <span class="glyphicon glyphicon-search"></span>
           <br/><br/>
           <!-- Dropdown: User can choose how many venue entries display on one page -->
           View: <select ng-model="pageSize" id="pageSize">
@@ -226,7 +226,7 @@
     <div id="footer">
       <div class="container">
         <br/>
-        <a data-toggle="modal" data-target="#about"><code>About tour(206)</code></a>
+        <a data-toggle="modal" data-target="#about" class="nav-element" ><code>About tour(206)</code></a>
         <br/>
       </div>
     </div>

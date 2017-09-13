@@ -29,7 +29,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
 
   // declare variables
   this.url         = 'https://tour206backend.herokuapp.com';
-  const self       = this;
+  let self         = this;
   this.loggedIn    = false;
   this.formdata    = '';
   this.user        = {};

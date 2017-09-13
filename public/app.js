@@ -32,7 +32,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
   const self       = this;
   this.loggedIn    = false;
   this.formdata    = '';
-  this.user        = {};
+  // this.user        = {};
   this.myshows     = [];
   this.venues      = [];
   this.users       = [];
@@ -188,7 +188,8 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(self.user, "this is the self.user object");
       localStorage.setItem('token', JSON.stringify(response.data.token));
       console.log(localStorage.token, " This is the token or at least it should be");
-    }.bind(this));
+    });
+    console.log(self.user);
     // GET ROUTE for shows: WORKS
     $http({
       method: 'GET',

@@ -197,7 +197,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       method: 'GET',
       url: self.url + '/shows',
     }).then(function(result){
-      console.log(result.data, " ... trying to call shows");
+      console.log(typeof result.data, " ... trying to call shows");
       self.allshows = result.data;
       console.log(allshows);
       console.log(result.data.length);

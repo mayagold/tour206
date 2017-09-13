@@ -198,7 +198,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/shows',
     }).then(function(result){
       console.log(typeof result.data, " ... trying to call shows");
-      self.allshows = result.data;
+      self.allshows.push(result.data);
       console.log(allshows);
       console.log(result.data.length);
       console.log(result.data[0].user_id);

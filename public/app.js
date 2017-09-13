@@ -182,14 +182,17 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       url: self.url + '/users/login',
       data: { user: { username: userPass.username, email: userPass.email, password: userPass.password }},
     }).then(function(response){
-
       console.log(response.data);
       self.loggedIn = true;
       self.user = response.data.user;
       localStorage.setItem('token', JSON.stringify(response.data.token));
       console.log(localStorage.token, " This is the token or at least it should be");
+      self.getShows();
     }.bind(this));
     // the method below finds all of the user's favorite shows by making a get request to the shows model and finding all shows with a user_id identical to the current user's id. then it repopulates the myshows array with that data and renders it on the page. so when a user logs in, their saved favorited shows are automatically loaded in the myshows tab.
+  }
+
+  this.getShows = function(){
     $http({
       method: 'GET',
       url: self.url + '/shows',
@@ -210,6 +213,7 @@ app.controller('mainController', ['$http', '$scope', '$filter', function($http, 
       console.log(self.myshows);
     })
   }
+
   // Register function
   this.register = function(userReg){
     $http({
